@@ -90,10 +90,10 @@ WSGI_APPLICATION = 'smth.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'smth',
-        'USER': 'anna',
-        'PASSWORD': 'a123',
-        'HOST': 'localhost',
+        'NAME': 'd1s1mpb9kjrkn',
+        'USER': 'gnqemyrcbglvzq',
+        'PASSWORD': '5f74c9b5c88762e40fac1d84a1e52f949a6534aca96b3bde8efc6fb5004dfc9b',
+        'HOST': 'ec2-75-101-133-29.compute-1.amazonaws.com',
         'PORT': '5432',
     }
 }
