@@ -1,0 +1,238 @@
+html{
+	font-size: 10px;
+	font-family: 'Open Sans', sans-serif;
+}
+.head{
+	background-size: 100% 150px;
+	height: 150px;
+	text-align: center;
+	background: rgb(0,87,115);
+}
+.body{
+	background: url('../image/body.png') no-repeat center top;
+	background-size: 100% 100%;
+	height: 100%;
+}
+.head-label{
+	font-family: 'Rubik', sans-serif;
+	font-size: 2rem;
+	font-weight: 700;
+	color: #fff;
+	/*display: inline-block;*/
+	text-align: left;
+}
+.head-label-reg{
+	font-family: 'Rubik', sans-serif;
+	font-size: 1rem;
+	font-weight: 400;
+	color: #fff;
+	/*display: inline-block;*/
+	/*text-align: left;*/
+	padding-right: 0.5rem;
+}
+.menu-label{
+	font-family: 'Rubik', sans-serif;
+	font-size: 1rem;
+	font-weight: 400;
+	color: #000;
+	/*display: inline-block;
+	text-align: left;*/
+}
+.label-body{
+	font-family: 'Rubik', sans-serif;
+	font-size: 1rem;
+	font-weight: 400;
+	color: #fff;
+	/*display: inline-block;*/
+	/*text-align: left;*/
+	padding: 0.75rem;
+	/*padding-right: 0.5rem;*/
+}
+
+.label-year{
+	font-family: 'Rubik', sans-serif;
+	font-size: 1rem;
+	font-weight: 400;
+}
+
+
+/*.head-back{
+	background: url('head_new.png') no-repeat center center;
+	background-size: 100%;
+	height: 100%;
+	width: 100%;
+	text-align: center;
+}
+.head-center{
+
+}
+.home-back{
+	background: url('body.png') no-repeat center top;
+	background-size: 100%;
+	height: 100vh;
+
+} style="color: #fff;"*/
+.down{
+	font-family: 'Rubik', sans-serif;
+	font-size: 1rem;
+	font-weight: 400;
+	color: #000;
+	/*display: inline-block;
+	/*text-align: left;*/
+	padding: 0.75rem;
+}
+
+.down-option{
+	font-family: 'Rubik', sans-serif;
+	font-size: 1rem;
+	font-weight: 400;
+	color: #000;
+	background-color: #fff;
+	/*display: inline-block;
+	/*text-align: left;*/
+	padding: 0.75rem;
+}
+
+#reviewStars-input input:checked ~ label, #reviewStars-input label, #reviewStars-input label:hover, #reviewStars-input label:hover ~ label {
+  background: url('http://positivecrash.com/wp-content/uploads/ico-s71a7fdede6.png') no-repeat;
+}
+
+#reviewStars-input {
+
+  /*fix floating problems*/
+  overflow: hidden;
+  *zoom: 1;
+  /*end of fix floating problems*/
+
+  position: relative;
+  float: left;
+}
+
+#reviewStars-input input {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+  opacity: 0;
+
+  width: 43px;
+  height: 40px;
+
+  position: absolute;
+  top: 0;
+  z-index: 0;
+}
+
+#reviewStars-input input:checked ~ label {
+  background-position: 0 -40px;
+  height: 40px;
+  width: 43px;
+}
+
+#reviewStars-input label {
+  background-position: 0 0;
+  height: 40px;
+  width: 43px;
+  float: right;
+  cursor: pointer;
+  margin-right: 10px;
+
+  position: relative;
+  z-index: 1;
+}
+
+#reviewStars-input label:hover, #reviewStars-input label:hover ~ label {
+  background-position: 0 -40px;
+  height: 40px;
+  width: 43px;
+}
+
+#reviewStars-input #star-0 {
+  left: 0px;
+}
+#reviewStars-input #star-1 {
+  left: 53px;
+}
+#reviewStars-input #star-2 {
+  left: 106px;
+}
+#reviewStars-input #star-3 {
+  left: 159px;
+}
+#reviewStars-input #star-4 {
+  left: 212px;
+}
+#reviewStars-input #star-5 {
+  left: 265px;
+}
+
+.label-search{
+	font-family: 'Rubik', sans-serif;
+	font-size: 1rem;
+	font-weight: 400;
+	color: #fff;
+	/*display: inline-block;*/
+	/*text-align: left;*/
+	padding: 0.75rem;
+	width: 100%;
+	transition: 0.3s;
+}
+
+.label-search:hover{
+	background-color: rgb(23,162,184);
+	transition: 0.3s;
+}
+
+.film-name{
+	font-family: 'Rubik', sans-serif;
+	font-size: 2rem;
+	font-weight: 700;
+	color: rgb(51,51,51);
+	padding-bottom: 0;
+	margin-bottom: 0;
+}
+.film-original-name{
+	font-family: 'Rubik', sans-serif;
+	font-size: 1.75rem;
+	font-weight: 400;
+	color: rgb(177,176,172);
+	padding-top: 0;
+	margin-top: 0;
+}
+.film-likes, .film-time, .film-producer,.film-year, .film-country{
+	font-family: 'Rubik', sans-serif;
+	font-size: 1rem;
+	font-weight: 400;
+	color: #000;
+}
+.film-description{
+	font-family: 'Rubik', sans-serif;
+	font-size: 1rem;
+	font-weight: 400;
+	color: #000;
+	margin-top: 1rem;
+}
+.film-genre{
+	font-family: 'Rubik', sans-serif;
+	font-size: 1rem;
+	font-weight: 400;
+	color: #fff;
+	background-color: rgb(177,176,172);
+	padding-left: 0.75rem;
+	padding-right: 0.75rem;
+	padding-top: 0.25rem;
+	padding-bottom: 0.25rem;
+	margin-right: 0.5rem;
+	border-radius: 1rem;
+}
+
+
+.send{
+	color:rgb(0,87,115);
+	background-color:transparent;
+	background-image:none;
+	/*border-color:rgb(0,87,115);*/
+	border: 1px solid rgb(0,87,115);
+}
+.send:hover{
+	 color:#fff;
+	 background-color:rgb(0,87,115);
+	 border-color:rgb(0,87,115);
+ }

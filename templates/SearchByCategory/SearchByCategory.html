@@ -1,0 +1,235 @@
+{% extends "layout.html" %}
+{% load staticfiles %}
+{% block content %}
+                    <div class="accordion col-11 col-sm-11 col-md-11 col-lg-11 col-xl-11 p-0" id="accordionExample" style="display: inline-block; margin-top: 2rem; text-align: left;">
+                        <div class="card mb-3">
+                            <div  id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="display: inline-block; background-color: #333;">
+                            <h5 class="mb-0">
+                            <button class="btn btn-link label-body m-1" style="text-decoration: none; color: #fff">
+                                ЖАНР
+                            </button>
+
+                            </h5>
+                            </div>
+
+                            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                            <div class="card-body">
+                                <div class="col-12 col-sm-12 col-md-12 mb-3" >
+                                <select id="genre1" type="combobox" class="btn btn-outline-info down" style="width: 100%">
+                                    {% for g in genres %}
+                                    <option class="down down-option">{{ g.name }}</option>
+                                    {% endfor %}
+                                </select>
+                                </div>
+
+{#                                <div class="col-12 col-sm-12 col-md-12 mb-3">#}
+{#                                <select id="genre2" type="combobox" class="btn btn-outline-info down" style="width: 100%">#}
+{#                                    {% for genre in genres %}#}
+{#                                    <option class="down down-option">{{ genre.name }}</option>#}
+{#                                    {% endfor %}#}
+{#                                </select>#}
+{#                                </div>#}
+{##}
+{#                                <div class="col-12 col-sm-12 col-md-12 mb-3">#}
+{#                                <select id="genre3" type="combobox" class="btn btn-outline-info down" style="width: 100%">#}
+{#                                    {% for genre in genres %}#}
+{#                                    <option class="down down-option">{{ genre.name }}</option>#}
+{#                                    {% endfor %}#}
+{#                                </select>#}
+{#                                </div>#}
+{##}
+{#                                <div class="col-12 col-sm-12 col-md-12 mb-3">#}
+{#                                <select id="genre4" type="combobox" class="btn btn-outline-info down" style="width: 100%">#}
+{#                                    {% for genre in genres %}#}
+{#                                    <option class="down down-option">{{ genre.name }}</option>#}
+{#                                    {% endfor %}#}
+{#                                </select>#}
+{#                                </div>#}
+{##}
+{#                                <div class="col-12 col-sm-12 col-md-12 mb-3">#}
+{#                                <select id="genre5" type="combobox" class="btn btn-outline-info down" style="width: 100%">#}
+{#                                    {% for genre in genres %}#}
+{#                                    <option class="down down-option">{{ genre.name }}</option>#}
+{#                                    {% endfor %}#}
+{#                                </select>#}
+{#                                </div>#}
+                            </div>
+                            </div>
+                        </div>
+
+                        <div class="card mb-3">
+                            <div  id="headingTwo" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" style="display: inline-block; background-color: #333;">
+                            <h5 class="mb-0">
+                            <button class="btn btn-link label-body m-1" style="text-decoration: none; color: #fff">
+                                ГОД
+                            </button>
+                            </h5>
+                            </div>
+
+                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                            <div class="card-body">
+                            <div class="col-12 col-sm-12 col-md-5 p-0" style="display: inline-block;">
+                                <label class="label-year">
+                                    ОТ
+                                </label>
+                                <select id="startYear" type="combobox" class="btn btn-outline-info down" style="width: 100%;">
+                                    {% for year in years %}
+                                    <option class="down down-option">{{ year.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-5 p-0" style="display: inline-block;">
+                                <label class="label-year">
+                                    ДО
+                                </label>
+                                <select id="endYear" type="combobox" class="btn btn-outline-info down" style="width: 100%">
+                                    {% for year in years %}
+                                    <option class="down down-option">{{ year.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            </div>
+                            </div>
+                        </div>
+
+                        <div class="card mb-3">
+                            <div  id="headingThree" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree" style="display: inline-block; background-color: #333;">
+                            <h5 class="mb-0">
+                            <button class="btn btn-link label-body m-1" style="text-decoration: none; color: #fff">
+                                СТРАНА
+                            </button>
+                            </h5>
+                            </div>
+
+                            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                            <div class="card-body">
+                            <div class="col-12 col-sm-12 col-md-12">
+                                <select id="country" type="combobox" class="btn btn-outline-info down" style="width: 100%">
+                                    {% for country in countries %}
+                                    <option class="down down-option">{{ country.name }}</option>
+                                    {% endfor %}
+                                </select>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+
+                        <div class="card mb-3">
+                            <div  id="headingFour" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour" style="display: inline-block; background-color: #333;">
+                            <h5 class="mb-0">
+                            <button class="btn btn-link label-body m-1" style="text-decoration: none; color: #fff">
+                                РЕЙТИНГ
+                            </button>
+                            </h5>
+                            </div>
+
+                            <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+                            <div class="card-body">
+                            <div class="form-group">
+                                <!-- <label for="formControlRange">Example Range input</label>
+                                <input type="range" class="form-control-range" id="formControlRange" min="1" max="20" step="1"> -->
+
+                                <div id="reviewStars-input">
+                                    <input id="star-4" type="radio" name="reviewStars" value="true"/>
+                                    <label title="gorgeous" for="star-4"></label>
+
+                                    <input id="star-3" type="radio" name="reviewStars" value="true"/>
+                                    <label title="good" for="star-3"></label>
+
+                                    <input id="star-2" type="radio" name="reviewStars" value="true"/>
+                                    <label title="regular" for="star-2"></label>
+
+                                    <input id="star-1" type="radio" name="reviewStars" value="true"/>
+                                    <label title="poor" for="star-1"></label>
+
+                                    <input id="star-0" type="radio" name="reviewStars" value="true"/>
+                                    <label title="bad" for="star-0"></label>
+                            </div>
+                            </div>
+                            </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="search-div col-11 col-sm-11 col-md-11 col-lg-11 col-xl-11 p-0" style="display: inline-block; margin-top: 2rem; background-color: rgb(0,87,115); text-align: center;">
+                        <a class="label-search m-0" id="categorySearch" style="text-decoration: none; width: 100%; display: inline-block; color: #fff;" >
+                            НАЙТИ
+                            </a>
+                    </div>
+
+                    <div id="outputFilm"  class="col-11 col-sm-11 col-md-11 col-lg-11 col-xl-11 p-0" style="display: none; margin-top: 2rem; text-align: left;">
+
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4" style="display: inline-block; vertical-align: top;">
+                            <img id="filmImage" src="" width="100%" height="100%">
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6" style="display: inline-block; vertical-align: top;">
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                <label id="filmName" class="film-name">
+                                    Название
+                                </label>
+                            </div>
+{#                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">#}
+{#                                <label id="filmOriginal" class="film-original-name">#}
+{#                                    оригинальное название#}
+{#                                </label>#}
+{#                            </div>#}
+                            <div id="filmRating" class="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7" style="display: inline-block;">
+                                <span class="str" style="font-size: 1.25rem; color:rgb(255,187,0);">
+                                    <i class="fas fa-star"></i>
+                                </span>
+                                <span class="str"  style="font-size: 1.25rem; color:rgb(255,187,0);">
+                                    <i class="fas fa-star"></i>
+                                </span>
+                                <span class="str"  style="font-size: 1.25rem; color:rgb(255,187,0);">
+                                    <i class="fas fa-star"></i>
+                                </span>
+                                <span class="str"  style="font-size: 1.25rem; color:rgb(255,187,0);">
+                                    <i class="fas fa-star"></i>
+                                </span>
+                                <span class="str"  style="font-size: 1.25rem; color:rgb(232,232,232);">
+                                    <i class="fas fa-star"></i>
+                                </span>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4" style="display: inline-block;">
+                                <span style="font-size: 1.25rem; color:rgb(254,31,31);">
+                                    <i class="fas fa-heart"></i>
+                                </span>
+                                <label class="film-likes" id="filmLikes">123 likes</label>
+                            </div>
+
+                            <div class="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7" style="display: inline-block;">
+                                <span style="font-size: 1.25rem; color:#000">
+                                    <i class="far fa-flag"></i>
+                                </span>
+                                <label id="filmCountry" class="film-country">Россия</label>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4" style="display: inline-block;">
+                                <span style="font-size: 1.25rem; color:#000">
+                                    <i class="far fa-clock"></i>
+                                </span>
+                                <label id="filmDuration" class="film-time">84 мин</label>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                <label id="filmYear" class="film-year">Год: 2018</label>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                <label id="filmProducer" class="film-producer">Режиссер:_____</label>
+                            </div>
+                            <div id="filmGenres" class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="display: inline-block;">
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            <label id="filmText" class="film-description">
+                            описание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описание
+                            описание описаниеописание описаниеописание описаниеописание описаниеописание описание
+                            </label>
+                        </div>
+
+
+                    </div>
+{% endblock %}

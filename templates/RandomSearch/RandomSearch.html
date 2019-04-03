@@ -1,0 +1,84 @@
+{% extends "layout.html" %}
+{% load staticfiles %}
+{% block content %}
+                    <div class="search-div col-11 col-sm-11 col-md-11 col-lg-11 col-xl-11 p-0" style="display: inline-block; margin-top: 2rem; background-color: rgb(0,87,115); text-align: center;">
+                        <a class="label-search m-0" id="randSearch" style="text-decoration: none; width: 100%; display: inline-block; color: #fff;" >
+                            НАЙТИ
+                            </a>
+                    </div>
+
+
+                    <div id="outputFilm"  class="col-11 col-sm-11 col-md-11 col-lg-11 col-xl-11 p-0" style="display: none; margin-top: 2rem; text-align: left;">
+
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4" style="display: inline-block; vertical-align: top;">
+                            <img id="filmImage" src="" width="100%" height="100%">
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6" style="display: inline-block; vertical-align: top;">
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                <label id="filmName" class="film-name">
+                                    Название
+                                </label>
+                            </div>
+{#                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">#}
+{#                                <label id="filmOriginal" class="film-original-name">#}
+{#                                    оригинальное название#}
+{#                                </label>#}
+{#                            </div>#}
+                            <div id="filmRating" class="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7" style="display: inline-block;">
+                                <span class="str" style="font-size: 1.25rem; color:rgb(255,187,0);">
+                                    <i class="fas fa-star"></i>
+                                </span>
+                                <span class="str"  style="font-size: 1.25rem; color:rgb(255,187,0);">
+                                    <i class="fas fa-star"></i>
+                                </span>
+                                <span class="str"  style="font-size: 1.25rem; color:rgb(255,187,0);">
+                                    <i class="fas fa-star"></i>
+                                </span>
+                                <span class="str"  style="font-size: 1.25rem; color:rgb(255,187,0);">
+                                    <i class="fas fa-star"></i>
+                                </span>
+                                <span class="str"  style="font-size: 1.25rem; color:rgb(232,232,232);">
+                                    <i class="fas fa-star"></i>
+                                </span>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4" style="display: inline-block;">
+                                <span style="font-size: 1.25rem; color:rgb(254,31,31);">
+                                    <i class="fas fa-heart"></i>
+                                </span>
+                                <label class="film-likes" id="filmLikes">123 likes</label>
+                            </div>
+
+                            <div class="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7" style="display: inline-block;">
+                                <span style="font-size: 1.25rem; color:#000">
+                                    <i class="far fa-flag"></i>
+                                </span>
+                                <label id="filmCountry" class="film-country">Россия</label>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4" style="display: inline-block;">
+                                <span style="font-size: 1.25rem; color:#000">
+                                    <i class="far fa-clock"></i>
+                                </span>
+                                <label id="filmDuration" class="film-time">84 мин</label>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                <label id="filmYear" class="film-year">Год: 2018</label>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                <label id="filmProducer" class="film-producer">Режиссер:_____</label>
+                            </div>
+                            <div id="filmGenres" class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="display: inline-block;">
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            <label id="filmText" class="film-description">
+                            описание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описание
+                            описание описаниеописание описаниеописание описаниеописание описаниеописание описание
+                            </label>
+                        </div>
+
+
+                    </div>
+{% endblock %}
