@@ -8,4 +8,5 @@ urlpatterns = [
     url(r'Registration', views.Registration, name="Registration"),
     url(r'Registrate', views.Registrate, name="Registrate"),
     url(r'Authorization', views.Authorization, name="Authorization"),
+    url(r'Authorize', views.Authorize, name="Authorize"),
 ]

@@ -16,17 +16,17 @@
 <div class="conteiner head" style="height: 100%; width: 100%;">
 			<div class="row align-items-center" style="height: 60%; width: 100%;">
 					<div class="col-5 col-sm-6 col-md-6 col-lg-6 col-xl-6 p-0" style="display: inline-block;">
-						<label class="head-label">
+                        <a href="{% url 'Main' %}"><label class="head-label">
 							SMTH
-						</label>
+						</label></a>
 					</div>
 					<div class="col-7 col-sm-6 col-md-6 col-lg-6 col-xl-6 p-0" style="display: inline-block;">
-						<label class="head-label-reg">
+                        <a href="{% url 'Authorization' %}"><label class="head-label-reg">
 							ВХОД
-						</label>
-						<label class="head-label-reg">
+						</label></a>
+                        <a href="{% url 'Registration' %}"><label class="head-label-reg">
 							РЕГИСТРАЦИЯ
-						</label>
+						</label></a>
 						<span style="font-size: 1rem; color:#fff">
   							<i class="far fa-user"></i>
 						</span>

@@ -11,7 +11,6 @@ import lxml.html
 
 
 def RandomSearch(request):
-
     return render(request, 'RandomSearch/RandomSearch.html', locals())
 
 

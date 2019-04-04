@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% load staticfiles %}
+{% block content %}
+                    <div class="col-11 col-sm-11 col-md-11 col-lg-11 col-xl-11 p-0" style="display: inline-block; background-color: #333; margin-top: 2rem; text-align: justify; text-align-last: justify;">
+                            <label class="label-body m-0">
+                            АВТОРИЗАЦИЯ
+                            </label>
+                    </div>
+
+                    <div class="col-11 col-sm-11 col-md-11 col-lg-11 col-xl-11 p-0" style="display: inline-block; margin-top: 2rem; text-align: justify; text-align-last: justify;">
+                            <div id="suc" class="alert alert-success" role="alert" style="text-align: left; text-align-last: left; display: none">
+                                Регистрация успешна!
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail">Email</label>
+                                <input type="email" class="form-control input-style" id="inputEmail" aria-describedby="emailHelp" placeholder="Введите email">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPassword">Пароль</label>
+                                <input type="password" class="form-control input-style" id="inputPassword" placeholder="Введите пароль">
+                            </div>
+                            <div id="alert" class="alert alert-danger" role="alert" style="text-align: left; text-align-last: left; display: none">
+                                Это уведомление об опасности — check it out!
+                            </div>
+                                <button id="sendAuth" type="button" style="border:1px solid rgb(0,87,115)" class="btn send">Войти</button>
+                                <a id="cancel" href="{% url 'Main' %}" ><button type="button" class="btn btn-outline-danger"> Отмена</button></a>
+                    </div>
+
+{% endblock %}

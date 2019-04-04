@@ -1,10 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 # rom smth import models
 from . import models
 from django.http import HttpResponse, JsonResponse
 import json
 import requests
 import bs4
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
 
 # Create your views here.
 
@@ -114,10 +116,28 @@ def Registrate(request):
     name = request.GET.get("name")
     email = request.GET.get("email")
     password = request.GET.get("pass1")
-    user=models.User(name=name,login=email,password=password)
+    user=User.objects.create_user(email, email, password)
+    user.first_name = name
+    # user=models.User(name=name,login=email,password=password)
     user.save()
     # return render(request, 'Main/Main.html', locals())
     return HttpResponse(json.dumps({'data': ''}))
 
 def Authorization(request):
-    return render(request, 'Main/Main.html', locals())
+    return render(request, 'Main/Authorization.html', locals())
+
+
+def Authorize(request):
+    email = request.GET.get("email")
+    passw = request.GET.get("passw")
+    user = authenticate(username=email, password=passw)
+
+    if user is None:
+        print('не найден')
+        return HttpResponse(json.dumps({'data': 'false'}))
+    else:
+        login(request,user)
+        request.session['userid']=user.id
+        request.session['username'] = user.username
+        request.session.modified = True
+        return HttpResponse(json.dumps({'data': 'true'}))

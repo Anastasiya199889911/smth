@@ -206,3 +206,60 @@ $('#send').click(function () {
     }
 
 })
+
+
+$('#sendAuth').click(function () {
+    $('#alert').css('display','none');
+    var email=document.getElementById('inputEmail').value
+    var pass=document.getElementById('inputPassword').value
+    var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+    var error='';
+    if(email=='' || pass=='')
+    {
+        error='Заполнены не все поля!';
+        $('#alert').css('display','block');
+        $('#alert').text(error);
+    }
+    else
+    {
+        if(reg.test(email) == false)
+        {
+            // alert('Введите корректный e-mail');
+            // return false;
+            error='Введите корректный e-mail!';
+            $('#alert').css('display','block');
+            $('#alert').text(error);
+        }
+        else
+        {
+                $.ajax({
+                type:"GET",
+                dataType:"json",
+                url:'/Main/Authorize/',
+                data: {
+                    email: email,
+                    passw:pass
+                },
+                success: function(data) {
+                    if(data.data=='true') {
+                        window.location.href = '/';
+                    }
+                    else
+                    {
+                        alert('Error');
+                        error='Не верная пара логин пароль!';
+                        $('#alert').css('display','block');
+                        $('#alert').text(error);
+                    }
+                    },
+                error: function (data) {
+                    alert('Error');
+                    error='Не верная пара логин пароль!';
+                    $('#alert').css('display','block');
+                    $('#alert').text(error);
+                    }
+                })
+        }
+    }
+
+})
