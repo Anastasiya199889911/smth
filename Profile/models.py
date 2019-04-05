@@ -108,3 +108,21 @@ class FilmComment(models.Model):
     class Meta:
         managed = False
         db_table = 'film_comment'
+
+
+class FilmWantSee(models.Model):
+    id_user = models.ForeignKey(AuthUser, models.DO_NOTHING, db_column='id_user')
+    id_film = models.ForeignKey(Film, models.DO_NOTHING, db_column='id_film')
+
+    class Meta:
+        managed = False
+        db_table = 'film_want_see'
+
+
+class FilmFavorite(models.Model):
+    id_user = models.ForeignKey(AuthUser, models.DO_NOTHING, db_column='id_user')
+    id_film = models.ForeignKey(Film, models.DO_NOTHING, db_column='id_film')
+
+    class Meta:
+        managed = False
+        db_table = 'film_favorite'

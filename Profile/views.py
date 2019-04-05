@@ -46,6 +46,12 @@ def Profile_Random_SearchFilm(request):
     likeFlag=False
     if(len(models.FilmLike.objects.filter(id_film=films[number].id, id_user=id))!=0):
         likeFlag=True
+    clockFlag = False
+    if (len(models.FilmWantSee.objects.filter(id_film=films[number].id, id_user=id)) != 0):
+        clockFlag = True
+    starFlag = False
+    if (len(models.FilmFavorite.objects.filter(id_film=films[number].id, id_user=id)) != 0):
+        starFlag = True
 
     film.append(films[number].name)
     film.append(films[number].image)
@@ -68,6 +74,8 @@ def Profile_Random_SearchFilm(request):
         com.append(c.text)
         comment.append(com)
     film.append(comment)
+    film.append(clockFlag)
+    film.append(starFlag)
     print(comment)
     return HttpResponse(json.dumps({'data': film}))
 
@@ -119,6 +127,13 @@ def Profile_Category_SearchFilm(request):
     likeFlag = False
     if (len(models.FilmLike.objects.filter(id_film=films[number].id, id_user=id)) != 0):
         likeFlag = True
+    clockFlag = False
+    if (len(models.FilmWantSee.objects.filter(id_film=films[number].id, id_user=id)) != 0):
+        clockFlag = True
+    starFlag = False
+    if (len(models.FilmFavorite.objects.filter(id_film=films[number].id, id_user=id)) != 0):
+        starFlag = True
+
     film.append(films[number].name)
     film.append(films[number].image)
     film.append(films[number].original_name)
@@ -140,6 +155,8 @@ def Profile_Category_SearchFilm(request):
         com.append(c.text)
         comment.append(com)
     film.append(comment)
+    film.append(clockFlag)
+    film.append(starFlag)
     print(comment)
     return HttpResponse(json.dumps({'data': film}))
 
@@ -204,7 +221,74 @@ def AddComment(request):
     print(comment)
     return HttpResponse(json.dumps({'data': comment}))
 
+def AddWantSee(request):
+    filmName = request.GET.get("filmName")
+    filmId=models.Film.objects.filter(name=filmName)
+    print(filmId[0])
+    id = request.session['userid']
+    user=models.AuthUser.objects.filter(id=id)
+    clockFlag = False
+    if(len(models.FilmWantSee.objects.filter(id_film_id=filmId[0].id, id_user_id=id))==0):
+        print(0000000)
+        filmWantSee=models.FilmWantSee(id_user=user[0], id_film=filmId[0])
+        filmWantSee.save()
+        clockFlag = True
+    else:
+        print(1111111)
+        filmWantSee=models.FilmWantSee.objects.get(id_user=user[0], id_film=filmId[0])
+        filmWantSee.delete()
+        clockFlag=False
+
+    # likes = models.FilmLike.objects.filter(id_film=filmId[0].id)
+
+    # if (len(models.FilmLike.objects.filter(id_film_id=filmId[0].id, id_user_id=id)) != 0):
+
+
+    film=[]
+    # film.append(len(likes))
+    film.append(clockFlag)
+    return HttpResponse(json.dumps({'data': film}))
+
+def WantSee(request):
+    id=request.session['userid']
+    name = request.session['username']
+    # films=models.FilmLike.objects.filter(id_film_id=filmId[0].id, id_user_id=id)
+    films=models.Film.objects.filter(filmwantsee__id_user=id).order_by('id')
+    return render(request, 'Profile/WantSee.html', locals())
+
+def AddFavorite(request):
+    filmName = request.GET.get("filmName")
+    filmId=models.Film.objects.filter(name=filmName)
+    print(filmId[0])
+    id = request.session['userid']
+    user=models.AuthUser.objects.filter(id=id)
+    starFlag = False
+    if(len(models.FilmFavorite.objects.filter(id_film_id=filmId[0].id, id_user_id=id))==0):
+        print(0000000)
+        filmFavorite=models.FilmFavorite(id_user=user[0], id_film=filmId[0])
+        filmFavorite.save()
+        starFlag = True
+    else:
+        print(1111111)
+        filmFavorite=models.FilmFavorite.objects.get(id_user=user[0], id_film=filmId[0])
+        filmFavorite.delete()
+        starFlag=False
+
+    # likes = models.FilmLike.objects.filter(id_film=filmId[0].id)
+
+    # if (len(models.FilmLike.objects.filter(id_film_id=filmId[0].id, id_user_id=id)) != 0):
+
+
+    film=[]
+    # film.append(len(likes))
+    film.append(starFlag)
+    return HttpResponse(json.dumps({'data': film}))
 
 def Exit(request):
     logout(request)
     return HttpResponseRedirect("/")
+
+
+def Dev(request):
+    name = request.session['username']
+    return render(request, 'Profile/Dev.html', locals())

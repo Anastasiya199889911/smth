@@ -330,6 +330,34 @@ function outputFilmInfoProfile(id, data) {
         elementdiv.insertAdjacentHTML('beforeend',elementhr.outerHTML);
         out.insertAdjacentHTML('beforeend',elementdiv.outerHTML);
     }
+    var c=data.data[13]
+    if(data.data[13]==true){
+        var clock=document.getElementById('clockIcon');
+
+        clock.classList.remove("far");
+        clock.classList.add("fas");
+    }
+    else
+    {
+        var clock=document.getElementById('clockIcon');
+
+        clock.classList.remove("fas");
+        clock.classList.add("far");
+    }
+    var s=data.data[14]
+    if(data.data[14]==true){
+        var star=document.getElementById('starIcon');
+
+        star.classList.remove("far");
+        star.classList.add("fas");
+    }
+    else
+    {
+        var star=document.getElementById('starIcon');
+
+        star.classList.remove("fas");
+        star.classList.add("far");
+    }
 }
 function outputFilmComment(data)
 {
@@ -417,6 +445,69 @@ $('#sendComment').click(function () {
         }
     })
 })
+$('#clockIcon').click(function () {
+    var filmName=document.getElementById('filmName').textContent
+    $.ajax({
+        type:"GET",
+        dataType:"json",
+        url:'/Profile/AddWantSee/',
+        data: {
+            filmName:filmName
+        },
+        success: function(data) {
+            var t=data.data[0]
+            if(data.data[0]==true)
+            {
+                var clock=document.getElementById('clockIcon');
+
+                clock.classList.remove("far");
+                clock.classList.add("fas");
+            }
+            else
+            {
+                var clock=document.getElementById('clockIcon');
+
+                clock.classList.remove("fas");
+                clock.classList.add("far");
+            }
+        },
+        error: function (data) {
+            alert('Error');
+        }
+    })
+})
+$('#starIcon').click(function () {
+    var filmName=document.getElementById('filmName').textContent
+    $.ajax({
+        type:"GET",
+        dataType:"json",
+        url:'/Profile/AddFavorite/',
+        data: {
+            filmName:filmName
+        },
+        success: function(data) {
+            var t=data.data[0]
+            if(data.data[0]==true)
+            {
+                var star=document.getElementById('starIcon');
+
+                star.classList.remove("far");
+                star.classList.add("fas");
+            }
+            else
+            {
+                var star=document.getElementById('starIcon');
+
+                star.classList.remove("fas");
+                star.classList.add("far");
+            }
+        },
+        error: function (data) {
+            alert('Error');
+        }
+    })
+})
+
 $('#send').click(function () {
     $('#alert').css('display','none');
     var name=document.getElementById('inputName').value
