@@ -84,7 +84,7 @@ $("#randSearchProfile").click(function () {
         dataType:"json",
         url:'/Profile/Profile_Random_SearchFilm/',
         success: function(data) {
-            outputFilmInfo("outputFilm", data)
+            outputFilmInfoProfile("outputFilm", data)
             // alert('ok');
             },
         error: function (data) {
@@ -134,10 +134,6 @@ $("#categorySearchProfile").click(function () {
             }
         }
     }
-    // var genre1=document.getElementById('genre1');
-    // var startYear=document.getElementById('startYear');
-    // var endYear=document.getElementById('endYear');
-    // var coutnry=document.getElementById('country');
     $.ajax({
         type:"GET",
         dataType:"json",
@@ -150,7 +146,7 @@ $("#categorySearchProfile").click(function () {
             rating:rating
         },
         success: function(data) {
-            outputFilmInfo("outputFilm", data)
+            outputFilmInfoProfile("outputFilm", data)
             // alert('ok');
             },
         error: function (data) {
@@ -224,6 +220,112 @@ function outputFilmInfo(id, data) {
     $('#filmText').text(data.data[9]);
     $('#filmLikes').text(data.data[10]+' likes');
 }
+function outputFilmInfoProfile(id, data) {
+    var obj = document.getElementById(id);
+    $('#outputFilm').css('display','inline-block');
+    $('#filmName').text(data.data[0]);
+    $('#filmImage').attr('src',data.data[1]);
+    $('#filmOriginal').text(data.data[2]);
+
+    $('.film-genre').remove();
+
+    var elemGenre=data.data[3];
+    var g=document.getElementById('filmGenres');
+    for(var i=0;i<elemGenre.length;i++)
+    {
+        let elementA = document.createElement('label');
+        elementA.setAttribute('class', 'film-genre');
+        elementA.textContent=elemGenre[i]
+        g.insertAdjacentHTML('beforeend',elementA.outerHTML);
+    }
+    $('#filmYear').text("Год: "+data.data[4]);
+    var elemCoyntry=data.data[5];
+    var countryStr='';
+    for(var i=0;i<elemCoyntry.length-1;i++)
+    {
+        countryStr+=elemCoyntry[i]+', ';
+    }
+    countryStr+=elemCoyntry[elemCoyntry.length-1]
+    $('#filmCountry').text(countryStr);
+    $('#filmDuration').text(data.data[6]);
+    $('#filmProducer').text("Режиссер: "+data.data[7]);
+    //
+    $('.str').remove();
+
+    var rating=Math.round(data.data[8]);
+    var notrating=5-rating;
+    var r=document.getElementById('filmRating');
+    while(rating>0)
+    {
+        let elementspan = document.createElement('span');
+        elementspan.setAttribute('class', 'str');
+        elementspan.style.fontSize='1.25rem';
+        elementspan.style.color='rgb(255,187,0)';
+
+        let elementi = document.createElement('i');
+        elementi.setAttribute('class', 'fas fa-star');
+
+        elementspan.insertAdjacentHTML('beforeend',elementi.outerHTML);
+        r.insertAdjacentHTML('beforeend',elementspan.outerHTML);
+        rating=rating-1;
+    }
+    while(notrating>0)
+    {
+        let elementspan = document.createElement('span');
+        elementspan.setAttribute('class', 'str');
+        elementspan.style.fontSize='1.25rem';
+        elementspan.style.color='rgb(177,176,172)';
+
+        let elementi = document.createElement('i');
+        elementi.setAttribute('class', 'fas fa-star');
+
+        elementspan.insertAdjacentHTML('beforeend',elementi.outerHTML);
+        r.insertAdjacentHTML('beforeend',elementspan.outerHTML);
+        notrating=notrating-1;
+    }
+    $('#filmText').text(data.data[9]);
+    $('#filmLikes').text(data.data[10]+' likes');
+    var t=data.data[11]
+    if(data.data[11]==true){
+        var like=document.getElementById('likeIcon');
+
+        like.classList.remove("far");
+        like.classList.add("fas");
+    }
+
+}
+
+$('#likeIcon').click(function () {
+    var filmName=document.getElementById('filmName').textContent
+    $.ajax({
+        type:"GET",
+        dataType:"json",
+        url:'/Profile/AddLike/',
+        data: {
+            filmName:filmName
+        },
+        success: function(data) {
+            $('#filmLikes').text(data.data[0]+' likes');
+            if(data.data[1]==true)
+            {
+                var like=document.getElementById('likeIcon');
+
+                like.classList.remove("far");
+                like.classList.add("fas");
+            }
+            else
+            {
+                var like=document.getElementById('likeIcon');
+
+                like.classList.remove("fas");
+                like.classList.add("far");
+            }
+        },
+        error: function (data) {
+            alert('Error');
+        }
+    })
+})
 
 $('#send').click(function () {
     $('#alert').css('display','none');

@@ -7,6 +7,7 @@ from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 import json
 import lxml.html
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 
 # Create your views here.
 
@@ -28,9 +29,7 @@ def RandomSearch(request):
     return render(request, 'Profile/RandomSearch.html', locals())
 
 def Profile_Random_SearchFilm(request):
-    print(1111111111)
     film=[]
-    print(film)
     films=models.Film.objects.all()
     number=random.randint(1,films.count()+1)
     genres=models.FilmByGenre.objects.filter(id_film=films[number].id)
@@ -41,6 +40,12 @@ def Profile_Random_SearchFilm(request):
     country=[]
     for c in countries:
         country.append(c.id_country.name)
+    likes=models.FilmLike.objects.filter(id_film=films[number].id)
+    id = request.session['userid']
+    likeFlag=False
+    if(len(models.FilmLike.objects.filter(id_film=films[number].id, id_user=id))!=0):
+        likeFlag=True
+
     film.append(films[number].name)
     film.append(films[number].image)
     film.append(films[number].original_name)
@@ -51,8 +56,8 @@ def Profile_Random_SearchFilm(request):
     film.append(films[number].producer)
     film.append(films[number].rating)
     film.append(films[number].text)
-    film.append(123)
-    print(film)
+    film.append(len(likes))
+    film.append(likeFlag)
     return HttpResponse(json.dumps({'data': film}))
 
 
@@ -109,6 +114,34 @@ def Profile_Category_SearchFilm(request):
     film.append(films[number].rating)
     film.append(films[number].text)
     film.append(123)
+    return HttpResponse(json.dumps({'data': film}))
+
+def AddLike(request):
+    filmName = request.GET.get("filmName")
+    filmId=models.Film.objects.filter(name=filmName)
+    print(filmId[0])
+    id = request.session['userid']
+    user=models.AuthUser.objects.filter(id=id)
+    likeFlag = False
+    if(len(models.FilmLike.objects.filter(id_film_id=filmId[0].id, id_user_id=id))==0):
+        print(0000000)
+        filmLike=models.FilmLike(id_user=user[0], id_film=filmId[0])
+        filmLike.save()
+        likeFlag = True
+    else:
+        print(1111111)
+        filmLike=models.FilmLike.objects.get(id_user=user[0], id_film=filmId[0])
+        filmLike.delete()
+        likeFlag=False
+
+    likes = models.FilmLike.objects.filter(id_film=filmId[0].id)
+
+    # if (len(models.FilmLike.objects.filter(id_film_id=filmId[0].id, id_user_id=id)) != 0):
+
+
+    film=[]
+    film.append(len(likes))
+    film.append(likeFlag)
     return HttpResponse(json.dumps({'data': film}))
 
 

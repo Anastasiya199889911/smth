@@ -8,7 +8,7 @@ urlpatterns = [
     url(r'Profile_Random_SearchFilm', views.Profile_Random_SearchFilm, name="Profile_Random_SearchFilm"),
     url(r'^SearchByCategory/', views.SearchByCategory, name="Profile_SearchByCategory"),
     url(r'Profile_Category_SearchFilm', views.Profile_Category_SearchFilm, name="Profile_Category_SearchFilm"),
-
+    url(r'AddLike', views.AddLike, name="AddLike"),
     # url(r'Random_SearchFilm', views.Random_SearchFilm, name="Profile_Random_SearchFilm"),
 
     # url(r'SearchByCategory', views.SearchByCategory, name="Profile_SearchByCategory"),

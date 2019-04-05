@@ -148,6 +148,8 @@ def Random_SearchFilm(request):
     country=[]
     for c in countries:
         country.append(c.id_country.name)
+    likes=models.FilmLike.objects.filter(id_film=films[number].id)
+
     film.append(films[number].name)
     film.append(films[number].image)
     film.append(films[number].original_name)
@@ -158,8 +160,7 @@ def Random_SearchFilm(request):
     film.append(films[number].producer)
     film.append(films[number].rating)
     film.append(films[number].text)
-    film.append(123)
-    print(film)
+    film.append(len(likes))
     return HttpResponse(json.dumps({'data': film}))
 
 
@@ -207,6 +208,7 @@ def Category_SearchFilm(request):
     country = []
     for c in countries:
         country.append(c.id_country.name)
+    likes = models.FilmLike.objects.filter(id_film=films[number].id)
     film.append(films[number].name)
     film.append(films[number].image)
     film.append(films[number].original_name)
@@ -217,7 +219,7 @@ def Category_SearchFilm(request):
     film.append(films[number].producer)
     film.append(films[number].rating)
     film.append(films[number].text)
-    film.append(123)
+    film.append(len(likes))
     return HttpResponse(json.dumps({'data': film}))
 
 
