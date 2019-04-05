@@ -23,10 +23,11 @@ def Profile(request):
 
 
 def RandomSearch(request):
-    return render(request, 'Main/RandomSearch.html', locals())
+    id = request.session['userid']
+    name = request.session['username']
+    return render(request, 'Profile/RandomSearch.html', locals())
 
-
-def Random_SearchFilm(request):
+def Profile_Random_SearchFilm(request):
     print(1111111111)
     film=[]
     print(film)
@@ -56,14 +57,16 @@ def Random_SearchFilm(request):
 
 
 def SearchByCategory(request):
+    id = request.session['userid']
+    name = request.session['username']
     genres=models.Genre.objects.all()
     years=models.Year.objects.all()
     countries=models.Country.objects.all()
     ratings=models.Rating.objects.all()
-    return render(request, 'Main/SearchByCategory.html', locals())
+    return render(request, 'Profile/SearchByCategory.html', locals())
 
 
-def Category_SearchFilm(request):
+def Profile_Category_SearchFilm(request):
     genre1 = request.GET.get("genre1")
     idGenre=(models.Genre.objects.filter(name=genre1))[0].id
     startYear = request.GET.get("startYear")

@@ -78,7 +78,86 @@ $("#categorySearch").click(function () {
         }
     })
 });
-
+$("#randSearchProfile").click(function () {
+    $.ajax({
+        type:"GET",
+        dataType:"json",
+        url:'/Profile/Profile_Random_SearchFilm/',
+        success: function(data) {
+            outputFilmInfo("outputFilm", data)
+            // alert('ok');
+            },
+        error: function (data) {
+            alert('Error');
+        }
+    })
+});
+$("#categorySearchProfile").click(function () {
+    var genre1=$('#genre1 option:selected').text();
+    var startYear=$('#startYear option:selected').text();
+    var endYear=$('#endYear option:selected').text();
+    var country=$('#country option:selected').text();
+    var rating='';
+    if($('#star-4:checked').val()=='true')
+    {
+        rating=5;
+    }
+    else
+    {
+        if($('#star-3:checked').val()=='true')
+        {
+            rating=4;
+        }
+        else
+        {
+            if($('#star-2:checked').val()=='true')
+            {
+                rating=3;
+            }
+            else
+            {
+                if($('#star-1:checked').val()=='true')
+                {
+                    rating=2;
+                }
+                else
+                {
+                    if($('#star-0:checked').val()=='true')
+                    {
+                        rating=1;
+                    }
+                    else
+                    {
+                        rating=0;
+                    }
+                }
+            }
+        }
+    }
+    // var genre1=document.getElementById('genre1');
+    // var startYear=document.getElementById('startYear');
+    // var endYear=document.getElementById('endYear');
+    // var coutnry=document.getElementById('country');
+    $.ajax({
+        type:"GET",
+        dataType:"json",
+        url:'/Profile/Profile_Category_SearchFilm/',
+        data: {
+            genre1: genre1,
+            startYear: startYear,
+            endYear:endYear,
+            country:country,
+            rating:rating
+        },
+        success: function(data) {
+            outputFilmInfo("outputFilm", data)
+            // alert('ok');
+            },
+        error: function (data) {
+            alert('Error');
+        }
+    })
+});
 function outputFilmInfo(id, data) {
     var obj = document.getElementById(id);
     $('#outputFilm').css('display','inline-block');

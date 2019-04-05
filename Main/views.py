@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 # rom smth import models
 from . import models
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 import json
 import requests
 import bs4
@@ -121,7 +121,17 @@ def Parse(request):
 
 
 def RandomSearch(request):
-    return render(request, 'Main/RandomSearch.html', locals())
+    id = request.session.get('userid', 'no')
+    if (id != 'no'):
+        id = request.session['userid']
+        name = request.session['username']
+        # email = request.session['useremail']
+        # return render(request, 'Profile/Ra.html', locals())
+        print('profile')
+        return HttpResponseRedirect("/Profile/SearchByRandom")
+    else:
+        print('main')
+        return render(request, 'Main/RandomSearch.html', locals())
 
 
 def Random_SearchFilm(request):
