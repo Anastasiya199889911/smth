@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'Main',
     'SearchByCategory',
     'RandomSearch',
+    'Profile',
 ]
 
 MIDDLEWARE = [

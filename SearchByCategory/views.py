@@ -14,7 +14,7 @@ def SearchByCategory(request):
     years=models.Year.objects.all()
     countries=models.Country.objects.all()
     ratings=models.Rating.objects.all()
-    return render(request, 'SearchByCategory/SearchByCategory.html', locals())
+    return render(request, 'SearchByCategory/../templates/Main/SearchByCategory.html', locals())
 
 
 def SearchFilm(request):

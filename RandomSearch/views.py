@@ -11,7 +11,7 @@ import lxml.html
 
 
 def RandomSearch(request):
-    return render(request, 'RandomSearch/RandomSearch.html', locals())
+    return render(request, 'RandomSearch/../templates/Main/RandomSearch.html', locals())
 
 
 def SearchFilm(request):

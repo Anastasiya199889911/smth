@@ -2,7 +2,7 @@ $("#randSearch").click(function () {
     $.ajax({
         type:"GET",
         dataType:"json",
-        url:'/RandomSearch/SearchFilm/',
+        url:'/Main/Random_SearchFilm/',
         success: function(data) {
             outputFilmInfo("outputFilm", data)
             // alert('ok');
@@ -61,7 +61,7 @@ $("#categorySearch").click(function () {
     $.ajax({
         type:"GET",
         dataType:"json",
-        url:'/SearchByCategory/SearchFilm/',
+        url:'/Main/Category_SearchFilm/',
         data: {
             genre1: genre1,
             startYear: startYear,
@@ -242,7 +242,7 @@ $('#sendAuth').click(function () {
                 },
                 success: function(data) {
                     if(data.data=='true') {
-                        window.location.href = '/';
+                        window.location.href = '/Profile';
                     }
                     else
                     {

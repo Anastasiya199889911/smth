@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Главная</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/reset.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-reboot.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,700,900" rel="stylesheet">
+</head>
+<body>
+<div class="conteiner head" style="height: 100%; width: 100%;">
+            <div class="row align-items-center" style="height: 60%; width: 100%;">
+                    <div class="col-5 col-sm-6 col-md-6 col-lg-6 col-xl-6 p-0" style="display: inline-block;">
+                        <label class="head-label">
+                            SMTH
+                        </label>
+                    </div>
+                    <div class="col-7 col-sm-6 col-md-6 col-lg-6 col-xl-6 p-0" style="display: inline-block;">
+
+                    </div>
+            <div class="col-md-12" style="background: rgb(0,87,115);">
+            <div class="col-md-8" style="text-align: center; display: inline-block;">
+                <nav class="navbar navbar-expand-lg navbar-dark " >
+                    <button id="btn" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar1"
+                        aria-controls="navbar1" aria-expanded="false" aria-label="Toggle navigation" >
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbar1">
+                        <ul class="navbar-nav mr-auto">
+                            <li id="LiNews" class="nav-item" >
+                                <a class="nav-link head-label-reg" style="color: #fff;" href="#" >ПОИСК ПО КАТЕГОРИЯМ</a>
+                            </li>
+                            <li id="liRapis" class="nav-item" >
+                                <a class="nav-link head-label-reg" style="color: #fff;" href="#" >СЛУЧАЙНЫЙ ПОИСК</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+            </div>
+
+            </div>
+        </div>
+
+    <section class="body">
+        <div class="conteiner" style="height: 100%; width: 100%;">
+            <div class="row justify-content-center m-0" style=" width: 100%;">
+                <div class="col-11 col-sm-11 col-md-11 col-lg-11 col-xl-11 p-0 justify-content-center pb-3 mt" style="height: 100%; display: inline-block; text-align: center; background-color: #fff; box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 15px">
+
+                    <div class="col-11 col-sm-11 col-md-11 col-lg-11 col-xl-11 p-0" style="display: inline-block;  margin-top: 2rem; text-align: justify; text-align-last: justify;">
+                        <div class="row justify-content-center m-0">
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3 p-2">
+                                <nav class="navbar navbar-expand-lg navbar-dark p-0" style="background-color: rgb(0,87,115);" >
+                                    <button id="btn" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar2"
+                        aria-controls="navbar2" aria-expanded="false" aria-label="Toggle navigation">
+                                        <span class="navbar-toggler-icon"></span>
+                                    </button>
+
+                                    <div class="collapse navbar-collapse" id="navbar2">
+                                        <!-- <a class="navbar-brand"  style="background-color: rgb(0,87,115);" href="#">Navbar</a> -->
+                                        <ul class="nav flex-column" style="width: 100%; background-color: #fff">
+                                            <li class="nav-item" style="background-color: rgb(0,87,115); padding: 0.25rem">
+                                                <a class="nav-link navbar-brand active" href="#">{{ name }}</a>
+                                            </li>
+                                            <li class="nav-item" style="text-align-last: left;">
+                                                <span style="font-size: 1rem; color:rgb(0,87,115); padding-right: 0.75rem; display: inline-block; padding: 1rem">
+                                                    <i class="fas fa-angle-right"></i>
+                                                </span>
+                                                <a class="nav-link p-1 profile-label-menu" href="#" style="display: inline-block; color: #000">Альбомы</a>
+                                            </li>
+                                             <li class="nav-item" style="text-align-last: left;">
+                                                <span style="font-size: 1rem; color:rgb(0,87,115); padding-right: 0.75rem; display: inline-block; padding: 1rem">
+                                                    <i class="fas fa-angle-right"></i>
+                                                </span>
+                                                <a class="nav-link p-1 profile-label-menu" href="#" style="display: inline-block; color: #000">Понравившееся</a>
+                                            </li>
+                                             <li class="nav-item" style="text-align-last: left;">
+                                                <span style="font-size: 1rem; color:rgb(0,87,115); padding-right: 0.75rem; display: inline-block; padding: 1rem">
+                                                    <i class="fas fa-angle-right"></i>
+                                                </span>
+                                                <a class="nav-link p-1 profile-label-menu" href="#" style="display: inline-block; color: #000">Хочу посмотреть</a>
+                                            </li>
+                                             <li class="nav-item" style="text-align-last: left;">
+                                                <span style="font-size: 1rem; color:rgb(0,87,115); padding-right: 0.75rem; display: inline-block; padding: 1rem">
+                                                    <i class="fas fa-angle-right"></i>
+                                                </span>
+                                                <a class="nav-link p-1 profile-label-menu" href="#" style="display: inline-block; color: #000">Последнее</a>
+                                            </li>
+                                             <li class="nav-item" style="text-align-last: left;">
+                                                <span style="font-size: 1rem; color:rgb(0,87,115); padding-right: 0.75rem; display: inline-block; padding: 1rem">
+                                                    <i class="fas fa-angle-right"></i>
+                                                </span>
+                                                <a class="nav-link p-1 profile-label-menu" href="#" style="display: inline-block; color: #000">Настройки</a>
+                                            </li>
+                                            <li class="nav-item" style="text-align-last: left;">
+                                                <span style="font-size: 1rem; color:rgb(0,87,115); padding-right: 0.75rem; display: inline-block; padding: 1rem">
+                                                    <i class="fas fa-angle-right"></i>
+                                                </span>
+                                                <a class="nav-link p-1 profile-label-menu" href="#" style="display: inline-block; color: #000">Выход</a>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                </nav>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 p-2">
+
+                                {% block content %}
+
+                                    {%  endblock %}
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+                </div>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0 justify-content-center p-3 mt-4" style="height: 100%; display: inline-block; text-align: center; background-color: #11555f">
+                    <label class="label-body ml-3 mr-3" style="vertical-align: middle;">
+                        ПОИСК ПО КАТЕГОРИЯМ
+                    </label>
+                    <label class="label-body ml-3 mr-3" style="vertical-align: middle;">
+                        СЛУЧАЙНЫЙ ПОИСК
+                    </label>
+                    <label class="label-body ml-3 mr-0" style="vertical-align: middle;">
+                        ВХОД
+                    </label>
+                    <label class="label-body ml-0 mr-3" style="vertical-align: middle;">
+                        РЕГИСТРАЦИЯ
+                    </label>
+                </div>
+            </div>
+        </div>
+    </section>
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/jquery.snow.js' %}"></script>
+
+
+<script src="{% static 'js/main.js' %}" ></script>
+</body>
+</html>
