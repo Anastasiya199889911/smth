@@ -19,7 +19,7 @@ def Main(request):
     if (id != 'no'):
         id = request.session['userid']
         name = request.session['username']
-        email = request.session['useremail']
+        # email = request.session['useremail']
         return render(request, 'Profile/Profile.html', locals())
     else:
         return render(request, 'Main/Main.html', locals())
@@ -237,7 +237,7 @@ def Authorize(request):
     else:
         login(request,user)
         request.session['userid']=user.id
-        request.session['useremail'] = user.username
+        # request.session['useremail'] = user.username
         request.session['username'] = user.first_name
         request.session.modified = True
         return HttpResponse(json.dumps({'data': 'true'}))
