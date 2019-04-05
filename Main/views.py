@@ -253,3 +253,26 @@ def Authorize(request):
         request.session['username'] = user.first_name
         request.session.modified = True
         return HttpResponse(json.dumps({'data': 'true'}))
+
+def Detail(request):
+    filmName=request.GET.get('filmName')
+    film = models.Film.objects.filter(name=filmName)
+    likes = len(models.FilmLike.objects.filter(id_film=film[0].id))
+    i = 1
+    rating = []
+    while (film[0].rating != len(rating)):
+        rating.append(i)
+    i = 0
+    notrating = []
+    while (len(rating) + len(notrating) != 5):
+        notrating.append(i)
+    genres = models.FilmByGenre.objects.filter(id_film=film[0].id)
+    genre = []
+    for g in genres:
+        genre.append(g.id_genre.name)
+    countries = models.FilmByCountry.objects.filter(id_film=film[0].id)
+    country = ''
+    for i in range(0, len(countries) - 1):
+        country = country + countries[i].id_country.name + ', '
+    country = country + countries[len(countries) - 1].id_country.name
+    return render(request, 'Main/Detail.html', locals())

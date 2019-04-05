@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,reverse,redirect
 import requests
 import bs4
 from . import models
@@ -65,7 +65,7 @@ def Profile_Random_SearchFilm(request):
     film.append(films[number].text)
     film.append(len(likes))
     film.append(likeFlag)
-    comments=models.FilmComment.objects.filter(id_film=films[number].id)
+    comments=models.FilmComment.objects.filter(id_film=films[number].id).order_by('-date_time')
     comment=[]
     for c in comments:
         com=[]
@@ -146,7 +146,7 @@ def Profile_Category_SearchFilm(request):
     film.append(films[number].text)
     film.append(len(likes))
     film.append(likeFlag)
-    comments = models.FilmComment.objects.filter(id_film=films[number].id)
+    comments = models.FilmComment.objects.filter(id_film=films[number].id).order_by('-date_time')
     comment = []
     for c in comments:
         com = []
@@ -162,6 +162,7 @@ def Profile_Category_SearchFilm(request):
 
 def AddLike(request):
     filmName = request.GET.get("filmName")
+    filmName=filmName.strip()
     filmId=models.Film.objects.filter(name=filmName)
     print(filmId[0])
     id = request.session['userid']
@@ -200,15 +201,19 @@ def Liked(request):
 def AddComment(request):
     filmName = request.GET.get("filmName")
     commentText = request.GET.get("commentText")
+    filmName=filmName.strip()
+    print(filmName)
     filmId=models.Film.objects.filter(name=filmName)
+    print(filmId[0])
 
     id = request.session['userid']
     user=models.AuthUser.objects.filter(id=id)
+    print(user[0])
     now = datetime.datetime.now()
     filmComment=models.FilmComment(id_user=user[0], id_film=filmId[0],date_time=now, text=commentText)
     filmComment.save()
 
-    comments = models.FilmComment.objects.filter(id_film=filmId[0].id)
+    comments = models.FilmComment.objects.filter(id_film=filmId[0].id).order_by('-date_time')
 
     # if (len(models.FilmLike.objects.filter(id_film_id=filmId[0].id, id_user_id=id)) != 0):
     comment = []
@@ -223,6 +228,7 @@ def AddComment(request):
 
 def AddWantSee(request):
     filmName = request.GET.get("filmName")
+    filmName = filmName.strip()
     filmId=models.Film.objects.filter(name=filmName)
     print(filmId[0])
     id = request.session['userid']
@@ -258,6 +264,7 @@ def WantSee(request):
 
 def AddFavorite(request):
     filmName = request.GET.get("filmName")
+    filmName = filmName.strip()
     filmId=models.Film.objects.filter(name=filmName)
     print(filmId[0])
     id = request.session['userid']
@@ -283,6 +290,53 @@ def AddFavorite(request):
     # film.append(len(likes))
     film.append(starFlag)
     return HttpResponse(json.dumps({'data': film}))
+
+def Detail(request):
+    id = request.session.get('userid', 'no')
+    filmName = request.GET.get("filmName")
+    if (id != 'no'):
+        film = models.Film.objects.filter(name=filmName)
+        name = request.session['username']
+        likes = len(models.FilmLike.objects.filter(id_film=film[0].id))
+        id = request.session['userid']
+        likeFlag = False
+        if (len(models.FilmLike.objects.filter(id_film=film[0].id, id_user=id)) != 0):
+            likeFlag = True
+        clockFlag = False
+        if (len(models.FilmWantSee.objects.filter(id_film=film[0].id, id_user=id)) != 0):
+            clockFlag = True
+        starFlag = False
+        if (len(models.FilmFavorite.objects.filter(id_film=film[0].id, id_user=id)) != 0):
+            starFlag = True
+        comments = models.FilmComment.objects.filter(id_film=film[0].id).order_by('-date_time')
+        comment = []
+        for c in comments:
+            com = []
+            com.append(c.id_user.first_name)
+            com.append(c.date_time.strftime("%d-%m-%Y %H:%M"))
+            com.append(c.text)
+            comment.append(com)
+        i=1
+        rating=[]
+        while(film[0].rating!=len(rating)):
+            rating.append(i)
+        i=0
+        notrating=[]
+        while(len(rating)+len(notrating)!=5):
+            notrating.append(i)
+        genres = models.FilmByGenre.objects.filter(id_film=film[0].id)
+        genre = []
+        for g in genres:
+            genre.append(g.id_genre.name)
+        countries = models.FilmByCountry.objects.filter(id_film=film[0].id)
+        country = ''
+        for i in range(0,len(countries)-1):
+            country=country+countries[i].id_country.name+', '
+        country = country + countries[len(countries)-1].id_country.name
+        return render(request, 'Profile/Detail.html', locals())
+    else:
+        # return redirect('/Detail/', args={'filmName': filmName})
+        return HttpResponseRedirect("/Detail/?filmName="+filmName)
 
 def Exit(request):
     logout(request)

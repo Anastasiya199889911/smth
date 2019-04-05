@@ -1,24 +1,26 @@
 {% extends "ProfileLayout.html" %}
 {% load staticfiles %}
 {% block content %}
-                    <div class="search-div col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0" style="display: inline-block; background-color: rgb(0,87,115); text-align: center;">
-                        <a class="label-search m-0" id="randSearchProfile" style="text-decoration: none; width: 100%; display: inline-block; color: #fff; text-align-last: center;" >
-                            НАЙТИ
-                            </a>
-                    </div>
-
-
-                    <div id="outputFilm"  class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0" style="display: none; margin-top: 2rem; text-align: left; text-align-last: left;">
+                {% for f in film %}
+                    <div id="outputFilm"  class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0" style="display: inline-block; margin-top: 2rem; text-align: left; text-align-last: left;">
 
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4" style="display: inline-block; vertical-align: top;">
-                            <img id="filmImage" src="" width="100%" height="100%">
+                            <img id="filmImage" src="{{ f.image }}" width="100%" height="100%">
                             <div class="col-12 p-2" style="display:inline-block; text-align: justify; text-align-last: justify">
                                 <span style="font-size: 1.5rem; color:#000; display: inline-block">
-                                    <i class="far fa-clock" id="clockIcon"></i>
+                                    {% if clockFlag == True %}
+                                        <i class="fas fa-clock" id="clockIcon"></i>
+                                    {% else %}
+                                        <i class="far fa-clock" id="clockIcon"></i>
+                                    {% endif %}
                                 </span>
 
                                 <span style="font-size: 1.5rem; color:rgb(255,187,0); display: inline-block">
-                                    <i class="far fa-star" id="starIcon"></i>
+                                    {% if starFlag == True %}
+                                        <i class="fas fa-star" id="starIcon"></i>
+                                    {% else %}
+                                        <i class="fas fa-star" id="starIcon"></i>
+                                    {% endif %}
                                 </span>
 
 
@@ -28,78 +30,83 @@
                         <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6" style="display: inline-block; vertical-align: top;">
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                 <label id="filmName" class="film-name">
-                                    Название
+                                    {{ f.name }}
                                 </label>
                             </div>
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                 <label id="filmOriginal" class="film-original-name">
-                                    оригинальное название
+                                    {{ f.original_name }}
                                 </label>
                             </div>
                             <div id="filmRating" class="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7" style="display: inline-block;">
+                                {% for r in rating %}
                                 <span class="str" style="font-size: 1.25rem; color:rgb(255,187,0);">
                                     <i class="fas fa-star"></i>
                                 </span>
-                                <span class="str"  style="font-size: 1.25rem; color:rgb(255,187,0);">
-                                    <i class="fas fa-star"></i>
-                                </span>
-                                <span class="str"  style="font-size: 1.25rem; color:rgb(255,187,0);">
-                                    <i class="fas fa-star"></i>
-                                </span>
-                                <span class="str"  style="font-size: 1.25rem; color:rgb(255,187,0);">
-                                    <i class="fas fa-star"></i>
-                                </span>
+                                    {% endfor %}
+                                {% for nr in notrating %}
                                 <span class="str"  style="font-size: 1.25rem; color:rgb(232,232,232);">
                                     <i class="fas fa-star"></i>
                                 </span>
+                                    {% endfor %}
                             </div>
                             <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4" style="display: inline-block;">
+
                                 <span style="font-size: 1.25rem; color:rgb(254,31,31);" >
-                                    <i class="far fa-heart" id="likeIcon"></i>
+                                    {% if likeFlag == True %}
+                                        <i class="fas fa-heart" id="likeIcon"></i>
+                                    {% else %}
+                                        <i class="far fa-heart" id="likeIcon"></i>
+                                    {% endif %}
                                 </span>
-                                <label class="film-likes" id="filmLikes">123 likes</label>
+
+                                <label class="film-likes" id="filmLikes">{{ likes }} likes</label>
                             </div>
 
                             <div class="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7" style="display: inline-block; text-align-last: left">
                                 <span style="font-size: 1.25rem; color:#000; display: inline-block">
                                     <i class="far fa-flag"></i>
                                 </span>
-                                <label id="filmCountry" class="film-country">Россия</label>
+                                <label id="filmCountry" class="film-country">{{ country }}</label>
                             </div>
                             <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4" style="display: inline-block; text-align-last: left">
                                 <span style="font-size: 1.25rem; color:#000; display: inline-block">
                                     <i class="far fa-clock"></i>
                                 </span>
-                                <label id="filmDuration" class="film-time">84 мин</label>
+                                <label id="filmDuration" class="film-time">{{ f.duration }}</label>
                             </div>
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                 <label id="filmYear" class="film-year">Год: 2018</label>
                             </div>
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                <label id="filmProducer" class="film-producer">Режиссер:_____</label>
+                                <label id="filmProducer" class="film-producer">Режиссер:{{ f.producer }}</label>
                             </div>
                             <div id="filmGenres" class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="display: inline-block;">
-
+                                {% for g in genre %}
+                                    <label class="film-genre">{{ g }}</label>
+                                {% endfor %}
                             </div>
                         </div>
 
 
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                             <label id="filmText" class="film-description">
-                            описание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описаниеописание описание
-                            описание описаниеописание описаниеописание описаниеописание описаниеописание описание
+                            {{ f.text }}
                             </label>
                         </div>
 
+    {% endfor %}
                         <div class="search-div col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0 pb-3" style="display: inline-block; text-align: center;">
                             <button id="send" type="button" data-toggle="modal" data-target="#commentModal" style="border:1px solid rgb(0,87,115)" class="btn send">Оставить комментарий</button>
                         </div>
+                    {% for c in comments %}
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 comment-card" style="display: inline-block;">
-                            <h4 style="display: inline-block;margin-right: 2rem">Alex</h4>
-                            <label class="small">05.04.2019 20:24</label>
-                            <label class="film-coment" id="commentText" style="width: 100%">rjvvtyn1</label>
+                            <h4 style="display: inline-block;margin-right: 2rem">{{ c.id_user.first_name }}</h4>
+                            <label class="small">{{ c.date_time|date:"m-d-Y H:i" }}</label>
+                            <label class="film-coment" id="commentText" style="width: 100%">{{ c.text }}</label>
                             <hr/>
                         </div>
+                    {% endfor %}
 
 
 

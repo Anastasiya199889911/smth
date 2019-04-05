@@ -9,6 +9,7 @@ urlpatterns = [
 
     url(r'^SearchByCategory/', views.SearchByCategory, name="SearchByCategory"),
     url(r'/Category_SearchFilm', views.Category_SearchFilm, name="Category_SearchFilm"),
+    url(r'^Detail/', views.Detail, name="Main_Detail"),
 
 
     url(r'^/Parse/', views.Parse, name="Parse"),
