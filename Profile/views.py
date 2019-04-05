@@ -5,6 +5,7 @@ from . import models
 import random
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 import json
+import datetime
 import lxml.html
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
@@ -58,6 +59,16 @@ def Profile_Random_SearchFilm(request):
     film.append(films[number].text)
     film.append(len(likes))
     film.append(likeFlag)
+    comments=models.FilmComment.objects.filter(id_film=films[number].id)
+    comment=[]
+    for c in comments:
+        com=[]
+        com.append(c.id_user.first_name)
+        com.append(c.date_time.strftime("%d-%m-%Y %H:%M"))
+        com.append(c.text)
+        comment.append(com)
+    film.append(comment)
+    print(comment)
     return HttpResponse(json.dumps({'data': film}))
 
 
@@ -103,6 +114,11 @@ def Profile_Category_SearchFilm(request):
     country = []
     for c in countries:
         country.append(c.id_country.name)
+    likes = models.FilmLike.objects.filter(id_film=films[number].id)
+    id = request.session['userid']
+    likeFlag = False
+    if (len(models.FilmLike.objects.filter(id_film=films[number].id, id_user=id)) != 0):
+        likeFlag = True
     film.append(films[number].name)
     film.append(films[number].image)
     film.append(films[number].original_name)
@@ -113,7 +129,18 @@ def Profile_Category_SearchFilm(request):
     film.append(films[number].producer)
     film.append(films[number].rating)
     film.append(films[number].text)
-    film.append(123)
+    film.append(len(likes))
+    film.append(likeFlag)
+    comments = models.FilmComment.objects.filter(id_film=films[number].id)
+    comment = []
+    for c in comments:
+        com = []
+        com.append(c.id_user.first_name)
+        com.append(c.date_time.strftime("%d-%m-%Y %H:%M"))
+        com.append(c.text)
+        comment.append(com)
+    film.append(comment)
+    print(comment)
     return HttpResponse(json.dumps({'data': film}))
 
 def AddLike(request):
@@ -143,6 +170,39 @@ def AddLike(request):
     film.append(len(likes))
     film.append(likeFlag)
     return HttpResponse(json.dumps({'data': film}))
+
+
+def Liked(request):
+    id=request.session['userid']
+    name = request.session['username']
+    # films=models.FilmLike.objects.filter(id_film_id=filmId[0].id, id_user_id=id)
+    films=models.Film.objects.filter(filmlike__id_user=id).order_by('id')
+    return render(request, 'Profile/Liked.html', locals())
+
+
+def AddComment(request):
+    filmName = request.GET.get("filmName")
+    commentText = request.GET.get("commentText")
+    filmId=models.Film.objects.filter(name=filmName)
+
+    id = request.session['userid']
+    user=models.AuthUser.objects.filter(id=id)
+    now = datetime.datetime.now()
+    filmComment=models.FilmComment(id_user=user[0], id_film=filmId[0],date_time=now, text=commentText)
+    filmComment.save()
+
+    comments = models.FilmComment.objects.filter(id_film=filmId[0].id)
+
+    # if (len(models.FilmLike.objects.filter(id_film_id=filmId[0].id, id_user_id=id)) != 0):
+    comment = []
+    for c in comments:
+        com = []
+        com.append(c.id_user.first_name)
+        com.append(c.date_time.strftime("%d-%m-%Y %H:%M"))
+        com.append(c.text)
+        comment.append(com)
+    print(comment)
+    return HttpResponse(json.dumps({'data': comment}))
 
 
 def Exit(request):

@@ -9,6 +9,8 @@ urlpatterns = [
     url(r'^SearchByCategory/', views.SearchByCategory, name="Profile_SearchByCategory"),
     url(r'Profile_Category_SearchFilm', views.Profile_Category_SearchFilm, name="Profile_Category_SearchFilm"),
     url(r'AddLike', views.AddLike, name="AddLike"),
+    url(r'^Liked/', views.Liked, name="Liked"),
+    url(r'AddComment', views.AddComment, name="AddComment"),
     # url(r'Random_SearchFilm', views.Random_SearchFilm, name="Profile_Random_SearchFilm"),
 
     # url(r'SearchByCategory', views.SearchByCategory, name="Profile_SearchByCategory"),

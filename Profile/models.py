@@ -97,3 +97,14 @@ class FilmLike(models.Model):
     class Meta:
         managed = False
         db_table = 'film_like'
+
+
+class FilmComment(models.Model):
+    id_user = models.ForeignKey(AuthUser, models.DO_NOTHING, db_column='id_user')
+    id_film = models.ForeignKey(Film, models.DO_NOTHING, db_column='id_film')
+    text = models.CharField(max_length=1000)
+    date_time = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'film_comment'

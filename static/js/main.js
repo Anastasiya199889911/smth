@@ -292,9 +292,79 @@ function outputFilmInfoProfile(id, data) {
         like.classList.remove("far");
         like.classList.add("fas");
     }
+    else
+    {
+        var like=document.getElementById('likeIcon');
 
+        like.classList.remove("fas");
+        like.classList.add("far");
+    }
+    $('.comment-card').remove();
+    var elemComment=data.data[12];
+    var out=document.getElementById('outputFilm');
+    for(var i=0;i<elemComment.length;i++)
+    {
+        let elementdiv = document.createElement('div');
+        elementdiv.setAttribute('class', 'col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 comment-card');
+        elementdiv.style.display='inline-block';
+
+        let elementh = document.createElement('h4');
+        elementh.style.display='inline-block';
+        elementh.style.marginRight='2rem';
+        elementh.textContent=elemComment[i][0]
+
+        let elementl1 = document.createElement('label');
+        elementl1.setAttribute('class', 'small');
+        elementl1.textContent=elemComment[i][1]
+
+        let elementl2 = document.createElement('label');
+        elementl2.setAttribute('class', 'film-coment');
+        elementl2.style.width='100%';
+        elementl2.textContent=elemComment[i][2]
+
+        let elementhr=document.createElement('hr');
+
+        elementdiv.insertAdjacentHTML('beforeend',elementh.outerHTML);
+        elementdiv.insertAdjacentHTML('beforeend',elementl1.outerHTML);
+        elementdiv.insertAdjacentHTML('beforeend',elementl2.outerHTML);
+        elementdiv.insertAdjacentHTML('beforeend',elementhr.outerHTML);
+        out.insertAdjacentHTML('beforeend',elementdiv.outerHTML);
+    }
 }
+function outputFilmComment(data)
+{
+    $('.comment-card').remove();
+    var elemComment=data.data;
+    var out=document.getElementById('outputFilm');
+    for(var i=0;i<elemComment.length;i++)
+    {
+        let elementdiv = document.createElement('div');
+        elementdiv.setAttribute('class', 'col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 comment-card');
+        elementdiv.style.display='inline-block';
 
+        let elementh = document.createElement('h4');
+        elementh.style.display='inline-block';
+        elementh.style.marginRight='2rem';
+        elementh.textContent=elemComment[i][0]
+
+        let elementl1 = document.createElement('label');
+        elementl1.setAttribute('class', 'small');
+        elementl1.textContent=elemComment[i][1]
+
+        let elementl2 = document.createElement('label');
+        elementl2.setAttribute('class', 'film-coment');
+        elementl2.style.width='100%';
+        elementl2.textContent=elemComment[i][2]
+
+        let elementhr=document.createElement('hr');
+
+        elementdiv.insertAdjacentHTML('beforeend',elementh.outerHTML);
+        elementdiv.insertAdjacentHTML('beforeend',elementl1.outerHTML);
+        elementdiv.insertAdjacentHTML('beforeend',elementl2.outerHTML);
+        elementdiv.insertAdjacentHTML('beforeend',elementhr.outerHTML);
+        out.insertAdjacentHTML('beforeend',elementdiv.outerHTML);
+    }
+}
 $('#likeIcon').click(function () {
     var filmName=document.getElementById('filmName').textContent
     $.ajax({
@@ -326,7 +396,27 @@ $('#likeIcon').click(function () {
         }
     })
 })
-
+$('#sendComment').click(function () {
+    var filmName=document.getElementById('filmName').textContent
+    var commentText=document.getElementById('comText').value
+    $('#closeComment').click();
+    $.ajax({
+        type:"GET",
+        dataType:"json",
+        url:'/Profile/AddComment/',
+        data: {
+            filmName:filmName,
+            commentText:commentText
+        },
+        success: function(data) {
+            // alert('ok');
+            outputFilmComment(data);
+        },
+        error: function (data) {
+            alert('Error');
+        }
+    })
+})
 $('#send').click(function () {
     $('#alert').css('display','none');
     var name=document.getElementById('inputName').value
@@ -371,7 +461,7 @@ $('#send').click(function () {
                     pass1:pass1
                 },
                 success: function(data) {
-                    alert('ok');
+                    // alert('ok');
                     $('#suc').css('display','block');
                     $('.form-group').css('display','none');
                     $('#send').css('display','none');

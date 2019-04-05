@@ -91,6 +91,37 @@
                             </label>
                         </div>
 
+                        <div class="search-div col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0 pb-3" style="display: inline-block; text-align: center;">
+                            <button id="send" type="button" data-toggle="modal" data-target="#commentModal" style="border:1px solid rgb(0,87,115)" class="btn send">Оставить комментарий</button>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 comment-card" style="display: inline-block;">
+                            <h4 style="display: inline-block;margin-right: 2rem">Alex</h4>
+                            <label class="small">05.04.2019 20:24</label>
+                            <label class="film-coment" id="commentText" style="width: 100%">rjvvtyn1</label>
+                            <hr/>
+                        </div>
+
+
 
                     </div>
+<div class="modal fade" id="commentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Оставить комментарий</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="text-align-last: left">
+          <label for="inputEmail" style="width: 100%">Текст</label>
+          <textarea name="comText" style="width: 100%" id="comText" cols="30" rows="10" placeholder="Введите текст"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="closeComment" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+        <button type="button" id="sendComment" class="btn btn-primary">Сохранить</button>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
