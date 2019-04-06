@@ -231,7 +231,10 @@ def Registrate(request):
     user.first_name = name
     # user=models.User(name=name,login=email,password=password)
     user.save()
-    # return render(request, 'Main/Main.html', locals())
+    auth_user=models.AuthUser.objects.filter(id=user.id)
+    print(auth_user[0])
+    album=models.Album(id_user=auth_user[0], name="Избранное")
+    album.save()
     return HttpResponse(json.dumps({'data': ''}))
 
 def Authorization(request):

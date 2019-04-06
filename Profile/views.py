@@ -5,7 +5,7 @@ from . import models
 import random
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 import json
-import datetime
+from datetime import datetime, timedelta
 import lxml.html
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
@@ -43,6 +43,7 @@ def Profile_Random_SearchFilm(request):
         country.append(c.id_country.name)
     likes=models.FilmLike.objects.filter(id_film=films[number].id)
     id = request.session['userid']
+    user=models.AuthUser.objects.filter(id=id)
     likeFlag=False
     if(len(models.FilmLike.objects.filter(id_film=films[number].id, id_user=id))!=0):
         likeFlag=True
@@ -77,6 +78,14 @@ def Profile_Random_SearchFilm(request):
     film.append(clockFlag)
     film.append(starFlag)
     print(comment)
+    last=models.FilmLast.objects.order_by('date').filter(id_user=id)
+    if(len(last)>=12):
+        last[0].id_film=films[number]
+        last[0].date=datetime.now()+timedelta(hours=3)
+        last[0].save()
+    else:
+        last=models.FilmLast(id_user=user[0],id_film=films[number],date=(datetime.now()+timedelta(hours=3)))
+        last.save()
     return HttpResponse(json.dumps({'data': film}))
 
 
@@ -158,6 +167,14 @@ def Profile_Category_SearchFilm(request):
     film.append(clockFlag)
     film.append(starFlag)
     print(comment)
+    last = models.FilmLast.objects.order_by('date').filter(id_user=id)
+    if (len(last) >= 12):
+        last[0].id_film = films[number]
+        last[0].date = datetime.now() + timedelta(hours=3)
+        last[0].save()
+    else:
+        last = models.FilmLast(id_user=user[0], id_film=films[number], date=(datetime.now() + timedelta(hours=3)))
+        last.save()
     return HttpResponse(json.dumps({'data': film}))
 
 def AddLike(request):
@@ -209,7 +226,7 @@ def AddComment(request):
     id = request.session['userid']
     user=models.AuthUser.objects.filter(id=id)
     print(user[0])
-    now = datetime.datetime.now()
+    now = datetime.now()+timedelta(hours=3)
     filmComment=models.FilmComment(id_user=user[0], id_film=filmId[0],date_time=now, text=commentText)
     filmComment.save()
 
@@ -275,17 +292,17 @@ def AddFavorite(request):
         filmFavorite=models.FilmFavorite(id_user=user[0], id_film=filmId[0])
         filmFavorite.save()
         starFlag = True
+        album=models.Album.objects.filter(name="Избранное", id_user=id)
+        filmAlbum=models.FilmAlbum(id_film=filmFavorite,id_album=album[0])
+        filmAlbum.save()
     else:
         print(1111111)
         filmFavorite=models.FilmFavorite.objects.get(id_user=user[0], id_film=filmId[0])
+        album = models.Album.objects.filter(name="Избранное", id_user=id)
+        filmAlbum = models.FilmAlbum(id_film=filmFavorite, id_album=album[0])
+        filmAlbum.delete()
         filmFavorite.delete()
         starFlag=False
-
-    # likes = models.FilmLike.objects.filter(id_film=filmId[0].id)
-
-    # if (len(models.FilmLike.objects.filter(id_film_id=filmId[0].id, id_user_id=id)) != 0):
-
-
     film=[]
     # film.append(len(likes))
     film.append(starFlag)
@@ -346,3 +363,30 @@ def Exit(request):
 def Dev(request):
     name = request.session['username']
     return render(request, 'Profile/Dev.html', locals())
+
+
+def Favorite(request):
+    id=request.session['userid']
+    name = request.session['username']
+    albums=models.Album.objects.filter(id_user=id)
+    films=[]
+    for a in albums:
+        f=[]
+        f.append(a.name)
+        films.append(f)
+        film=models.Film.objects.filter(filmfavorite__filmalbum__id_album=a.id)
+        if(len(film)>4):
+            film=film[4]
+        films.append(film)
+    print(films)
+    for f in films:
+        print(len(f))
+    # films=models.Film.objects.filter(filmwantsee__id_user=id).order_by('id')
+    return render(request, 'Profile/Favorite.html', locals())
+
+
+def Last(request):
+    id=request.session['userid']
+    name = request.session['username']
+    films=models.Film.objects.order_by('-filmlast__date').filter(filmlast__id_user=id)
+    return render(request, 'Profile/Last.html', locals())

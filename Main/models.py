@@ -105,3 +105,12 @@ class FilmLike(models.Model):
     class Meta:
         managed = False
         db_table = 'film_like'
+
+
+class Album(models.Model):
+    id_user = models.ForeignKey('AuthUser', models.DO_NOTHING, db_column='id_user')
+    name = models.CharField(max_length=50, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'album'

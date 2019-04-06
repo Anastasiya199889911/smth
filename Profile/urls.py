@@ -15,6 +15,8 @@ urlpatterns = [
     url(r'^WantSee/', views.WantSee, name="WantSee"),
     url(r'AddFavorite', views.AddFavorite, name="AddFavorite"),
     url(r'^Detail/', views.Detail, name="Detail"),
+    url(r'^Favorite/', views.Favorite, name="Favorite"),
+    url(r'^Last/', views.Last, name="Last"),
     # url(r'Random_SearchFilm', views.Random_SearchFilm, name="Profile_Random_SearchFilm"),
 
     # url(r'SearchByCategory', views.SearchByCategory, name="Profile_SearchByCategory"),
