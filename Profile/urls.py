@@ -17,6 +17,11 @@ urlpatterns = [
     url(r'^Detail/', views.Detail, name="Detail"),
     url(r'^Favorite/', views.Favorite, name="Favorite"),
     url(r'^Last/', views.Last, name="Last"),
+    url(r'^Album/', views.Album, name="Album"),
+    url(r'CheckAlbumName', views.CheckAlbumName, name="CheckAlbumName"),
+    url(r'AddAlbumAndFilm', views.AddAlbumAndFilm, name="AddAlbumAndFilm"),
+    url(r'AddFilmInAlbum', views.AddFilmInAlbum, name="AddFilmInAlbum"),
+
     # url(r'Random_SearchFilm', views.Random_SearchFilm, name="Profile_Random_SearchFilm"),
 
     # url(r'SearchByCategory', views.SearchByCategory, name="Profile_SearchByCategory"),

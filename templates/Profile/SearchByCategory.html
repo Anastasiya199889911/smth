@@ -158,6 +158,26 @@
                             НАЙТИ
                             </a>
                     </div>
+    <div class="col-11 col-sm-11 col-md-11 col-lg-11 col-xl-11 p-0" id="loader" style="display: none; margin-top: 2rem; text-align-last: center; text-align: center">
+<div id="circularG" style="display:inline-block;">
+<div id="circularG_1" class="circularG">
+</div>
+<div id="circularG_2" class="circularG">
+</div>
+<div id="circularG_3" class="circularG">
+</div>
+<div id="circularG_4" class="circularG">
+</div>
+<div id="circularG_5" class="circularG">
+</div>
+<div id="circularG_6" class="circularG">
+</div>
+<div id="circularG_7" class="circularG">
+</div>
+<div id="circularG_8" class="circularG">
+</div>
+</div>
+</div>
 
                     <div id="outputFilm"  class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0" style="display: none; margin-top: 2rem; text-align: left; text-align-last: left">
 
@@ -173,6 +193,19 @@
                                 </span>
 
 
+                            </div>
+                            <div class="col-12 p-2">
+                                <div class="dropdown" style="width: 100%">
+                                  <button style="width: 100%;" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Сохранить в альбом
+                                  </button>
+                                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                      {% for a in album %}
+                                        <a class="dropdown-item addFilmInAlbum">{{ a.name }}</a>
+                                      {% endfor %}
+                                    <a class="dropdown-item" data-toggle="modal" data-target="#albumModal" >Добавить альбом и сохранить</a>
+                                  </div>
+                                </div>
                             </div>
                         </div>
                         <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6" style="display: inline-block; vertical-align: top;">
@@ -269,6 +302,31 @@
       <div class="modal-footer">
         <button type="button" id="closeComment" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
         <button type="button" id="sendComment" class="btn btn-primary">Сохранить</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+            <div class="modal fade" id="albumModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Добавить альбом</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="text-align-last: left">
+          <label for="inputEmail" style="width: 100%">Название альбома</label>
+          <input type="text" name="albumName" style="width: 100%" id="albumName" placeholder="Введите имя альбома">
+          <div id="alert" class="alert alert-danger" role="alert" style="text-align: left; text-align-last: left; display: none">
+              Это уведомление об опасности — check it out!
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="closeAlbum" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+        <button type="button" id="sendAlbumAndAddFilm" class="btn btn-primary">Сохранить</button>
       </div>
     </div>
   </div>

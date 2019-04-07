@@ -107,6 +107,16 @@ class FilmLike(models.Model):
         db_table = 'film_like'
 
 
+
+class FilmFavorite(models.Model):
+    id_user = models.ForeignKey(AuthUser, models.DO_NOTHING, db_column='id_user')
+    id_film = models.ForeignKey(Film, models.DO_NOTHING, db_column='id_film')
+
+    class Meta:
+        managed = False
+        db_table = 'film_favorite'
+
+
 class Album(models.Model):
     id_user = models.ForeignKey('AuthUser', models.DO_NOTHING, db_column='id_user')
     name = models.CharField(max_length=50, blank=True, null=True)
@@ -114,3 +124,12 @@ class Album(models.Model):
     class Meta:
         managed = False
         db_table = 'album'
+
+
+class FilmAlbum(models.Model):
+    id_film = models.ForeignKey(FilmFavorite, models.DO_NOTHING, db_column='id_film')
+    id_album = models.ForeignKey(Album, models.DO_NOTHING, db_column='id_album')
+
+    class Meta:
+        managed = False
+        db_table = 'film_album'

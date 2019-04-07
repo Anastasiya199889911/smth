@@ -27,6 +27,7 @@ def Profile(request):
 def RandomSearch(request):
     id = request.session['userid']
     name = request.session['username']
+    album=models.Album.objects.filter(id_user=id)
     return render(request, 'Profile/RandomSearch.html', locals())
 
 def Profile_Random_SearchFilm(request):
@@ -133,6 +134,7 @@ def Profile_Category_SearchFilm(request):
         country.append(c.id_country.name)
     likes = models.FilmLike.objects.filter(id_film=films[number].id)
     id = request.session['userid']
+    user = models.AuthUser.objects.filter(id=id)
     likeFlag = False
     if (len(models.FilmLike.objects.filter(id_film=films[number].id, id_user=id)) != 0):
         likeFlag = True
@@ -368,20 +370,8 @@ def Dev(request):
 def Favorite(request):
     id=request.session['userid']
     name = request.session['username']
-    albums=models.Album.objects.filter(id_user=id)
-    films=[]
-    for a in albums:
-        f=[]
-        f.append(a.name)
-        films.append(f)
-        film=models.Film.objects.filter(filmfavorite__filmalbum__id_album=a.id)
-        if(len(film)>4):
-            film=film[4]
-        films.append(film)
-    print(films)
-    for f in films:
-        print(len(f))
-    # films=models.Film.objects.filter(filmwantsee__id_user=id).order_by('id')
+    film=models.Film.objects.filter(filmfavorite__id_user=id)
+
     return render(request, 'Profile/Favorite.html', locals())
 
 
@@ -390,3 +380,65 @@ def Last(request):
     name = request.session['username']
     films=models.Film.objects.order_by('-filmlast__date').filter(filmlast__id_user=id)
     return render(request, 'Profile/Last.html', locals())
+
+
+def Album(request):
+    id = request.session.get('userid', 'no')
+    name = request.session['username']
+    album_name = models.Album.objects.filter(id_user=id)
+    album=[]
+    for a in album_name:
+        film=[]
+        film.append(a.name)
+        films=models.Film.objects.filter(filmalbum__id_album=a.id)
+        if(len(films)>4):
+            fims=films[:4]
+        album.append(film)
+        album.append(films)
+    return render(request, 'Profile/Album.html', locals())
+
+
+def CheckAlbumName(request):
+    albumName = request.GET.get("albumName")
+    id = request.session['userid']
+    albums=models.Album.objects.filter(name=albumName,id_user=id)
+    flag=False
+    print(len(albums))
+    if(len(albums)==0):
+        flag=True
+    else:
+        flag=False
+    return HttpResponse(json.dumps({'data': flag}))
+
+
+def AddAlbumAndFilm(request):
+    albumName = request.GET.get("albumName")
+    filmName = request.GET.get("filmName")
+    print(filmName)
+    id = request.session['userid']
+    user=models.AuthUser.objects.filter(id=id)
+    albums=models.Album(id_user=user[0], name=albumName)
+    albums.save()
+    print(albums)
+
+    film = models.Film.objects.filter(name=filmName)
+    print(film[0])
+    filmAdd = models.FilmAlbum(id_album=albums, id_film=film[0])
+    filmAdd.save()
+
+    return HttpResponse(json.dumps({'data': 'ok'}))
+
+
+def AddFilmInAlbum(request):
+    albumName = request.GET.get("albumName")
+    filmName = request.GET.get("filmName")
+    print('element')
+    id = request.session['userid']
+    user=models.AuthUser.objects.filter(id=id)
+    album=models.Album.objects.filter(id_user=id, name=albumName)
+    print(filmName)
+    film=models.Film.objects.filter(name=filmName)
+    filmAdd=models.FilmAlbum(id_album=album[0],id_film=film[0])
+    filmAdd.save()
+    print(filmAdd)
+    return HttpResponse(json.dumps({'data': 'ок'}))

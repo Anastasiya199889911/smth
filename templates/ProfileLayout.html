@@ -53,7 +53,7 @@
             <div class="row justify-content-center m-0" style=" width: 100%;">
                 <div class="col-11 col-sm-11 col-md-11 col-lg-11 col-xl-11 p-0 justify-content-center pb-3 mt" style="height: 100%; display: inline-block; text-align: center; background-color: #fff; box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 15px">
 
-                    <div class="col-11 col-sm-11 col-md-11 col-lg-11 col-xl-11 p-0" style="display: inline-block;  margin-top: 2rem; text-align: justify; text-align-last: justify;">
+{#                    <div class="col-11 col-sm-11 col-md-11 col-lg-11 col-xl-11 p-0" style="display: inline-block;  margin-top: 2rem; text-align: justify; text-align-last: justify;">#}
                         <div class="row justify-content-center m-0">
                             <div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3 p-2">
                                 <nav class="navbar navbar-expand-lg navbar-dark p-0" style="background-color: rgb(0,87,115);" >
@@ -72,7 +72,13 @@
                                                 <span style="font-size: 1rem; color:rgb(0,87,115); padding-right: 0.75rem; display: inline-block; padding: 1rem">
                                                     <i class="fas fa-angle-right"></i>
                                                 </span>
-                                                <a class="nav-link p-1 profile-label-menu" href="{% url 'Favorite' %}" style="display: inline-block; color: #000">Альбомы</a>
+                                                <a class="nav-link p-1 profile-label-menu" href="{% url 'Favorite' %}" style="display: inline-block; color: #000">Избранное</a>
+                                            </li>
+                                            <li class="nav-item elem_profile" id="favorite" style="text-align-last: left;">
+                                                <span style="font-size: 1rem; color:rgb(0,87,115); padding-right: 0.75rem; display: inline-block; padding: 1rem">
+                                                    <i class="fas fa-angle-right"></i>
+                                                </span>
+                                                <a class="nav-link p-1 profile-label-menu" href="{% url 'Album' %}" style="display: inline-block; color: #000">Альбомы</a>
                                             </li>
                                              <li class="nav-item elem_profile" id="liked" style="text-align-last: left;" >
                                                 <span style="font-size: 1rem; color:rgb(0,87,115); padding-right: 0.75rem; display: inline-block; padding: 1rem">
@@ -116,7 +122,7 @@
                                     {%  endblock %}
                             </div>
                         </div>
-                    </div>
+{#                    </div>#}
 
 
 

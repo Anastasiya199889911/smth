@@ -1,19 +1,17 @@
 {% extends "ProfileLayout.html" %}
 {% load staticfiles %}
 {% block content %}
-    {% for film in films %}
-        {% if film|length == 1 %}
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0" style="display: inline-block; background-color: #333; text-align: justify; text-align-last: justify;">
-                {% for f in film %}
                 <label class="label-body m-0">
-                    {{ f|upper }}
+                    ИЗБРАННОЕ
                 </label>
-                {% endfor %}
                 <span style="font-size: 1rem; color:#fff; padding-right: 0.75rem">
-                    <i class="fas fa-angle-right"></i>
+                        <button type="submit" class="p-0 m-0" style="background-color: rgb(51,51,51); color:#fff; border: none;">
+                            <i class="fas fa-angle-right"></i>
+                         </button>
                 </span>
+
             </div>
-        {% else %}
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0" style="display: inline-block; margin-top: 2rem; text-align: justify; text-align-last: justify;">
                 <div class="row justify-content-center">
                     {% for f in film %}
@@ -28,7 +26,31 @@
                     {% endfor %}
                 </div>
             </div>
-        {% endif %}
-    {% endfor %}
 
+{#    <div class="search-div col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0 pb-3" style="display: inline-block; text-align: left; text-align-last: left">#}
+{#        <button id="addAlbum" type="button" data-toggle="modal" data-target="#albumModal" style="border:1px solid rgb(0,87,115)" class="btn send">Добавить альбом</button>#}
+{#    </div>#}
+{#    <div class="modal fade" id="albumModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">#}
+{#  <div class="modal-dialog" role="document">#}
+{#    <div class="modal-content">#}
+{#      <div class="modal-header">#}
+{#        <h5 class="modal-title" id="exampleModalLabel">Добавить альбом</h5>#}
+{#        <button type="button" class="close" data-dismiss="modal" aria-label="Close">#}
+{#          <span aria-hidden="true">&times;</span>#}
+{#        </button>#}
+{#      </div>#}
+{#      <div class="modal-body" style="text-align-last: left">#}
+{#          <label for="inputEmail" style="width: 100%">Название альбома</label>#}
+{#          <input type="text" name="albumName" style="width: 100%" id="albumName" placeholder="Введите имя альбома">#}
+{#          <div id="alert" class="alert alert-danger" role="alert" style="text-align: left; text-align-last: left; display: none">#}
+{#              Это уведомление об опасности — check it out!#}
+{#          </div>#}
+{#      </div>#}
+{#      <div class="modal-footer">#}
+{#        <button type="button" id="closeAlbum" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>#}
+{#        <button type="button" id="sendAlbum" class="btn btn-primary">Сохранить</button>#}
+{#      </div>#}
+{#    </div>#}
+{#  </div>#}
+{#</div>#}
 {% endblock %}

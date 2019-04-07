@@ -1,0 +1,63 @@
+{% extends "ProfileLayout.html" %}
+{% load staticfiles %}
+{% block content %}
+    {% for a in album %}
+        {% if a|length == 1 %}
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0" style="display: inline-block; background-color: #333; text-align: justify; text-align-last: justify;">
+                        {% for a in a %}
+                                <label class="label-body m-0" id="albumName">
+                                 {{ a|upper }}
+                                </label>
+                            <form action="/Profile/AlbumInfo/" method="get" style="display: inline-block;">
+                                <span style="display: inline-block; font-size: 1rem; color:#fff; padding-right: 0.75rem;">
+                                    <button style="background-color: rgb(51,51,51); color: #fff; border: none">
+                                        <i class="fas fa-angle-right"></i>
+                                    </button>
+                                </span>
+                            </form>
+                        {% endfor %}
+                    </div>
+        {% else %}
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0" style="display: inline-block; margin-top: 2rem; text-align: justify; text-align-last: justify;">
+                        <div class="row justify-content-center">
+                            {% for f in a %}
+                            <div class="col-11 col-sm-11 col-md-3 col-lg-3 col-xl-3 mb-3" style="display: inline-block;">
+                                <form class="img_block" action="/Profile/Detail/" method="get" style="width: 100%; height: 100%;">
+                                    <input type="hidden" name="filmName" value="{{f.name}}">
+                                    <button type="submit" class="p-0 m-0" style="background-color: #fff; border: none; width: 100%; height: 100%">
+                                        <img  class="img-fluid" src="{{ f.image }}" alt="фото мероприятия" style="width: 100%; height: 100%">
+                                    </button>
+                                </form>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+        {% endif %}
+    {% endfor %}
+    <div class="search-div col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0 pb-3" style="display: inline-block; text-align: left; text-align-last: left">
+        <button id="addAlbum" type="button" data-toggle="modal" data-target="#albumModal" style="border:1px solid rgb(0,87,115)" class="btn send">Добавить альбом</button>
+    </div>
+    <div class="modal fade" id="albumModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Добавить альбом</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="text-align-last: left">
+          <label for="inputEmail" style="width: 100%">Название альбома</label>
+          <input type="text" name="albumName" style="width: 100%" id="albumName" placeholder="Введите имя альбома">
+          <div id="alert" class="alert alert-danger" role="alert" style="text-align: left; text-align-last: left; display: none">
+              Это уведомление об опасности — check it out!
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="closeAlbum" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+        <button type="button" id="sendAlbum" class="btn btn-primary">Сохранить</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

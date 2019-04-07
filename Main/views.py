@@ -233,8 +233,8 @@ def Registrate(request):
     user.save()
     auth_user=models.AuthUser.objects.filter(id=user.id)
     print(auth_user[0])
-    album=models.Album(id_user=auth_user[0], name="Избранное")
-    album.save()
+    # album=models.Album(id_user=auth_user[0], name="Избранное")
+    # album.save()
     return HttpResponse(json.dumps({'data': ''}))
 
 def Authorization(request):
@@ -279,3 +279,15 @@ def Detail(request):
         country = country + countries[i].id_country.name + ', '
     country = country + countries[len(countries) - 1].id_country.name
     return render(request, 'Main/Detail.html', locals())
+
+
+def Album(request):
+    albumName=request.GET.get('albumName')
+    params = albumName.split('|')
+    print(params)
+    album_name=params[0]
+    id=params[1]
+    albums = models.Album.objects.filter(id_user=id, name=album_name)
+    films = models.Film.objects.filter(filmfavorite__filmalbum__id_album=albums[0].id)
+    # name = request.session['username']
+    return render(request, 'Main/Album.html', locals())

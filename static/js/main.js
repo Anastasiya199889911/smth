@@ -1,4 +1,6 @@
 $("#randSearch").click(function () {
+    $('#outputFilm').css('display','none');
+    $('#loader').css('display','inline-block');
     $.ajax({
         type:"GET",
         dataType:"json",
@@ -13,6 +15,8 @@ $("#randSearch").click(function () {
     })
 });
 $("#categorySearch").click(function () {
+    $('#outputFilm').css('display','none');
+    $('#loader').css('display','inline-block');
     var genre1=$('#genre1 option:selected').text();
     var startYear=$('#startYear option:selected').text();
     var endYear=$('#endYear option:selected').text();
@@ -79,6 +83,9 @@ $("#categorySearch").click(function () {
     })
 });
 $("#randSearchProfile").click(function () {
+
+    $('#outputFilm').css('display','none');
+    $('#loader').css('display','inline-block');
     $.ajax({
         type:"GET",
         dataType:"json",
@@ -93,6 +100,8 @@ $("#randSearchProfile").click(function () {
     })
 });
 $("#categorySearchProfile").click(function () {
+    $('#outputFilm').css('display','none');
+    $('#loader').css('display','inline-block');
     var genre1=$('#genre1 option:selected').text();
     var startYear=$('#startYear option:selected').text();
     var endYear=$('#endYear option:selected').text();
@@ -156,6 +165,7 @@ $("#categorySearchProfile").click(function () {
 });
 function outputFilmInfo(id, data) {
     var obj = document.getElementById(id);
+    $('#loader').css('display','none');
     $('#outputFilm').css('display','inline-block');
     $('#filmName').text(data.data[0]);
     $('#filmImage').attr('src',data.data[1]);
@@ -222,6 +232,8 @@ function outputFilmInfo(id, data) {
 }
 function outputFilmInfoProfile(id, data) {
     var obj = document.getElementById(id);
+
+    $('#loader').css('display','none');
     $('#outputFilm').css('display','inline-block');
     $('#filmName').text(data.data[0]);
     $('#filmImage').attr('src',data.data[1]);
@@ -445,6 +457,55 @@ $('#sendComment').click(function () {
         }
     })
 })
+$('#sendAlbum').click(function () {
+    // var filmName=document.getElementById('filmName').textContent
+    var albumName=document.getElementById('albumName').value
+    if ( /^[a-z\d]+$/i.test(albumName) ) {
+        $('#alert').css('display', 'block');
+        $('#alert').text('Название содержит запрещенные символы!');
+    }
+    else {
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            url: '/Profile/CheckAlbumName/',
+            data: {
+                albumName: albumName
+            },
+            success: function (data) {
+                alert('ok');
+                if (data.data == true) {
+                     // alert('ok if');
+                    $('#closeAlbum').click();
+                    $.ajax({
+                        type: "GET",
+                        dataType: "json",
+                        url: '/Profile/AddAlbum/',
+                        data: {
+                            albumName: albumName
+                        },
+                        success: function (data) {
+                            alert('ok');
+                            window.location.href = '/Profile/Album';
+                        },
+                        error: function (data) {
+                            alert('Error');
+                        }
+                    })
+                } else {
+                     alert('ok else');
+                    $('#alert').css('display', 'block');
+                    $('#alert').text('Альбом с таким именем уже есть!');
+                }
+            },
+            error: function (data) {
+                alert('Error');
+            }
+        })
+    }
+
+})
+
 $('#clockIcon').click(function () {
     var filmName=document.getElementById('filmName').textContent
     $.ajax({
@@ -622,6 +683,75 @@ $('#sendAuth').click(function () {
                     }
                 })
         }
+    }
+
+})
+
+$('.addFilmInAlbum').click(function () {
+    var albumName=$(this).text();
+    var filmName=document.getElementById('filmName').textContent;
+    $.ajax({
+        type:"GET",
+        dataType:"json",
+        url:'/Profile/AddFilmInAlbum/',
+        data: {
+            filmName:filmName,
+            albumName:albumName
+        },
+        success: function(data) {
+            alert('ок');
+        },
+        error: function (data) {
+            alert('Error');
+        }
+    })
+})
+$('#sendAlbumAndAddFilm').click(function () {
+    var filmName=document.getElementById('filmName').textContent
+    var albumName=document.getElementById('albumName').value
+    if ( /^[a-z\d]+$/i.test(albumName) ) {
+        $('#alert').css('display', 'block');
+        $('#alert').text('Название содержит запрещенные символы!');
+    }
+    else {
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            url: '/Profile/CheckAlbumName/',
+            data: {
+                albumName: albumName
+            },
+            success: function (data) {
+                alert('ok');
+                if (data.data == true) {
+                     // alert('ok if');
+                    $('#closeAlbum').click();
+                    $.ajax({
+                        type: "GET",
+                        dataType: "json",
+                        url: '/Profile/AddAlbumAndFilm/',
+                        data: {
+                            albumName: albumName,
+                            filmName: filmName
+                        },
+                        success: function (data) {
+                            alert('ok');
+                            // window.location.href = '/Profile/Album';
+                        },
+                        error: function (data) {
+                            alert('Error');
+                        }
+                    })
+                } else {
+                     alert('ok else');
+                    $('#alert').css('display', 'block');
+                    $('#alert').text('Альбом с таким именем уже есть!');
+                }
+            },
+            error: function (data) {
+                alert('Error');
+            }
+        })
     }
 
 })
