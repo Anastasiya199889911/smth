@@ -97,6 +97,7 @@ def SearchByCategory(request):
     years=models.Year.objects.all()
     countries=models.Country.objects.all()
     ratings=models.Rating.objects.all()
+    album = models.Album.objects.filter(id_user=id)
     return render(request, 'Profile/SearchByCategory.html', locals())
 
 
@@ -294,15 +295,15 @@ def AddFavorite(request):
         filmFavorite=models.FilmFavorite(id_user=user[0], id_film=filmId[0])
         filmFavorite.save()
         starFlag = True
-        album=models.Album.objects.filter(name="Избранное", id_user=id)
-        filmAlbum=models.FilmAlbum(id_film=filmFavorite,id_album=album[0])
-        filmAlbum.save()
+        # album=models.Album.objects.filter(name="Избранное", id_user=id)
+        # filmAlbum=models.FilmAlbum(id_film=filmFavorite,id_album=album[0])
+        # filmAlbum.save()
     else:
         print(1111111)
         filmFavorite=models.FilmFavorite.objects.get(id_user=user[0], id_film=filmId[0])
-        album = models.Album.objects.filter(name="Избранное", id_user=id)
-        filmAlbum = models.FilmAlbum(id_film=filmFavorite, id_album=album[0])
-        filmAlbum.delete()
+        # album = models.Album.objects.filter(name="Избранное", id_user=id)
+        # filmAlbum = models.FilmAlbum(id_film=filmFavorite, id_album=album[0])
+        # filmAlbum.delete()
         filmFavorite.delete()
         starFlag=False
     film=[]
@@ -352,6 +353,7 @@ def Detail(request):
         for i in range(0,len(countries)-1):
             country=country+countries[i].id_country.name+', '
         country = country + countries[len(countries)-1].id_country.name
+        album = models.Album.objects.filter(id_user=id)
         return render(request, 'Profile/Detail.html', locals())
     else:
         # return redirect('/Detail/', args={'filmName': filmName})
@@ -383,17 +385,18 @@ def Last(request):
 
 
 def Album(request):
-    id = request.session.get('userid', 'no')
+    id = request.session['userid']
     name = request.session['username']
     album_name = models.Album.objects.filter(id_user=id)
     album=[]
     for a in album_name:
-        film=[]
-        film.append(a.name)
+        # film=[]
+        # film.append(a.name)
+        print(type(a.name))
         films=models.Film.objects.filter(filmalbum__id_album=a.id)
         if(len(films)>4):
-            fims=films[:4]
-        album.append(film)
+            films=films[:4]
+        album.append(a.name)
         album.append(films)
     return render(request, 'Profile/Album.html', locals())
 
@@ -441,4 +444,57 @@ def AddFilmInAlbum(request):
     filmAdd=models.FilmAlbum(id_album=album[0],id_film=film[0])
     filmAdd.save()
     print(filmAdd)
+    return HttpResponse(json.dumps({'data': 'ок'}))
+
+
+def AlbumInfo(request):
+    id = request.session.get('userid', 'no')
+    albumName = request.GET.get("albumName")
+    if (id != 'no'):
+        al=albumName.split('|')[0]
+        album = models.Album.objects.filter(name=al)
+        films = models.Film.objects.filter(filmalbum__id_album=album[0].id)
+        name = request.session['username']
+        id = request.session['userid']
+        return render(request, 'Profile/AlbumInfo.html', locals())
+    else:
+        # return redirect('/Detail/', args={'filmName': filmName})
+        return HttpResponseRedirect("/AlbumInfo/?albumName="+albumName)
+
+def DeleteAlbum(request):
+    albumName = request.GET.get("albumName")
+    print(albumName)
+    id = request.session['userid']
+    user=models.AuthUser.objects.filter(id=id)
+    album=models.Album.objects.filter(id_user=id, name=albumName)
+    print(album)
+    films=models.FilmAlbum.objects.filter(id_album=album[0].id)
+    print(films)
+    for f in films:
+        f.delete()
+
+    album.delete()
+
+
+    return HttpResponse(json.dumps({'data': 'ок'}))
+
+
+def DeleteFilmAlbum(request):
+    filmName = request.GET.get("filmName")
+    albumName = request.GET.get("albumName")
+    print(filmName)
+    id = request.session['userid']
+    user=models.AuthUser.objects.filter(id=id)
+    album=models.Album.objects.filter(id_user=id, name=albumName)
+
+    print(album)
+    films=models.FilmAlbum.objects.filter(id_album=album[0].id, id_film__name=filmName)
+    print(films)
+    # print(films)
+    for f in films:
+        f.delete()
+    #
+    # album.delete()
+
+
     return HttpResponse(json.dumps({'data': 'ок'}))

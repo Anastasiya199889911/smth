@@ -10,7 +10,7 @@ urlpatterns = [
     url(r'^SearchByCategory/', views.SearchByCategory, name="SearchByCategory"),
     url(r'/Category_SearchFilm', views.Category_SearchFilm, name="Category_SearchFilm"),
     url(r'^Detail/', views.Detail, name="Main_Detail"),
-    url(r'^Album/', views.Album, name="Main_Album"),
+    url(r'^AlbumInfo/', views.AlbumInfo, name="Main_AlbumInfo"),
 
 
     url(r'^/Parse/', views.Parse, name="Parse"),

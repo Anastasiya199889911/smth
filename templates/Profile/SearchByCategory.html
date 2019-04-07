@@ -187,17 +187,9 @@
                                 <span style="font-size: 1.5rem; color:#000; display: inline-block">
                                     <i class="far fa-clock" id="clockIcon"></i>
                                 </span>
-
-                                <span style="font-size: 1.5rem; color:rgb(255,187,0); display: inline-block">
-                                    <i class="far fa-star" id="starIcon"></i>
-                                </span>
-
-
-                            </div>
-                            <div class="col-12 p-2">
-                                <div class="dropdown" style="width: 100%">
-                                  <button style="width: 100%;" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Сохранить в альбом
+                                <div class="dropdown" style="display: inline-block; vertical-align: middle">
+                                <button id="listAlbum" style="display: inline-block; color: #000" class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-list"></i>
                                   </button>
                                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                       {% for a in album %}
@@ -206,6 +198,11 @@
                                     <a class="dropdown-item" data-toggle="modal" data-target="#albumModal" >Добавить альбом и сохранить</a>
                                   </div>
                                 </div>
+                                <span style="font-size: 1.5rem; color:rgb(255,187,0); display: inline-block">
+                                    <i class="far fa-star" id="starIcon"></i>
+                                </span>
+
+
                             </div>
                         </div>
                         <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6" style="display: inline-block; vertical-align: top;">
@@ -320,7 +317,7 @@
       <div class="modal-body" style="text-align-last: left">
           <label for="inputEmail" style="width: 100%">Название альбома</label>
           <input type="text" name="albumName" style="width: 100%" id="albumName" placeholder="Введите имя альбома">
-          <div id="alert" class="alert alert-danger" role="alert" style="text-align: left; text-align-last: left; display: none">
+          <div id="alert" class="alert alert-danger" role="alert" style="margin-top:1rem;text-align: left; text-align-last: left; display: none">
               Это уведомление об опасности — check it out!
           </div>
       </div>

@@ -485,7 +485,7 @@ $('#sendAlbum').click(function () {
                             albumName: albumName
                         },
                         success: function (data) {
-                            alert('ok');
+                            // alert('ok');
                             window.location.href = '/Profile/Album';
                         },
                         error: function (data) {
@@ -493,7 +493,7 @@ $('#sendAlbum').click(function () {
                         }
                     })
                 } else {
-                     alert('ok else');
+                     // alert('ok else');
                     $('#alert').css('display', 'block');
                     $('#alert').text('Альбом с таким именем уже есть!');
                 }
@@ -669,14 +669,14 @@ $('#sendAuth').click(function () {
                     }
                     else
                     {
-                        alert('Error');
+                        // alert('Error');
                         error='Не верная пара логин пароль!';
                         $('#alert').css('display','block');
                         $('#alert').text(error);
                     }
                     },
                 error: function (data) {
-                    alert('Error');
+                    // alert('Error');
                     error='Не верная пара логин пароль!';
                     $('#alert').css('display','block');
                     $('#alert').text(error);
@@ -699,7 +699,10 @@ $('.addFilmInAlbum').click(function () {
             albumName:albumName
         },
         success: function(data) {
-            alert('ок');
+            // alert('ок');
+            var list=document.getElementById('listAlbum');
+
+            list.style.color='green';
         },
         error: function (data) {
             alert('Error');
@@ -722,7 +725,7 @@ $('#sendAlbumAndAddFilm').click(function () {
                 albumName: albumName
             },
             success: function (data) {
-                alert('ok');
+                // alert('ok');
                 if (data.data == true) {
                      // alert('ok if');
                     $('#closeAlbum').click();
@@ -735,7 +738,10 @@ $('#sendAlbumAndAddFilm').click(function () {
                             filmName: filmName
                         },
                         success: function (data) {
-                            alert('ok');
+                            // alert('ok');
+                            var list=document.getElementById('listAlbum');
+
+                            list.style.color='green';
                             // window.location.href = '/Profile/Album';
                         },
                         error: function (data) {
@@ -743,7 +749,7 @@ $('#sendAlbumAndAddFilm').click(function () {
                         }
                     })
                 } else {
-                     alert('ok else');
+                     // alert('ok else');
                     $('#alert').css('display', 'block');
                     $('#alert').text('Альбом с таким именем уже есть!');
                 }
@@ -754,4 +760,45 @@ $('#sendAlbumAndAddFilm').click(function () {
         })
     }
 
+})
+
+$('#deleteAlbum').click(function () {
+    var albumName=document.getElementById('albumName').value;
+    $.ajax({
+        type:"GET",
+        dataType:"json",
+        url:'/Profile/DeleteAlbum/',
+        data: {
+            albumName:albumName
+        },
+        success: function(data) {
+            // alert('ок');
+            window.location.href = '/Profile/Album';
+        },
+        error: function (data) {
+            alert('Error');
+        }
+    })
+})
+
+$('.deleteFilmAlbum').click(function () {
+    var filmName=$(this).prev().val();
+    var albumName=document.getElementById('albumName').value;
+    var user=document.getElementById('user').value;
+    $.ajax({
+        type:"GET",
+        dataType:"json",
+        url:'/Profile/DeleteFilmAlbum/',
+        data: {
+            filmName:filmName,
+            albumName:albumName
+        },
+        success: function(data) {
+            // alert('ок');
+            window.location.href = '/Profile/AlbumInfo?albumName='+albumName+'|'+user;
+        },
+        error: function (data) {
+            alert('Error');
+        }
+    })
 })

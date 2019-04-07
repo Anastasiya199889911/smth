@@ -127,7 +127,7 @@ class Album(models.Model):
 
 
 class FilmAlbum(models.Model):
-    id_film = models.ForeignKey(FilmFavorite, models.DO_NOTHING, db_column='id_film')
+    id_film = models.ForeignKey(Film, models.DO_NOTHING, db_column='id_film')
     id_album = models.ForeignKey(Album, models.DO_NOTHING, db_column='id_album')
 
     class Meta:

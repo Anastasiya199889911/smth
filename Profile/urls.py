@@ -21,6 +21,9 @@ urlpatterns = [
     url(r'CheckAlbumName', views.CheckAlbumName, name="CheckAlbumName"),
     url(r'AddAlbumAndFilm', views.AddAlbumAndFilm, name="AddAlbumAndFilm"),
     url(r'AddFilmInAlbum', views.AddFilmInAlbum, name="AddFilmInAlbum"),
+    url(r'^AlbumInfo/', views.AlbumInfo, name="AlbumInfo"),
+    url(r'DeleteAlbum', views.DeleteAlbum, name="DeleteAlbum"),
+    url(r'DeleteFilmAlbum', views.DeleteFilmAlbum, name="DeleteFilmAlbum"),
 
     # url(r'Random_SearchFilm', views.Random_SearchFilm, name="Profile_Random_SearchFilm"),
 

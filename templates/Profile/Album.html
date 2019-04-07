@@ -1,21 +1,21 @@
 {% extends "ProfileLayout.html" %}
+{% load myfilter %}
 {% load staticfiles %}
 {% block content %}
     {% for a in album %}
-        {% if a|length == 1 %}
+        {% if a|get_type == "<class 'str'>" %}
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0" style="display: inline-block; background-color: #333; text-align: justify; text-align-last: justify;">
-                        {% for a in a %}
                                 <label class="label-body m-0" id="albumName">
                                  {{ a|upper }}
                                 </label>
                             <form action="/Profile/AlbumInfo/" method="get" style="display: inline-block;">
+                                <input type="hidden" name="albumName" value="{{ a }}|{{ id }}">
                                 <span style="display: inline-block; font-size: 1rem; color:#fff; padding-right: 0.75rem;">
-                                    <button style="background-color: rgb(51,51,51); color: #fff; border: none">
+                                    <button type="submit" style="background-color: rgb(51,51,51); color: #fff; border: none">
                                         <i class="fas fa-angle-right"></i>
                                     </button>
                                 </span>
                             </form>
-                        {% endfor %}
                     </div>
         {% else %}
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0" style="display: inline-block; margin-top: 2rem; text-align: justify; text-align-last: justify;">

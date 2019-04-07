@@ -281,13 +281,13 @@ def Detail(request):
     return render(request, 'Main/Detail.html', locals())
 
 
-def Album(request):
+def AlbumInfo(request):
     albumName=request.GET.get('albumName')
     params = albumName.split('|')
     print(params)
     album_name=params[0]
     id=params[1]
     albums = models.Album.objects.filter(id_user=id, name=album_name)
-    films = models.Film.objects.filter(filmfavorite__filmalbum__id_album=albums[0].id)
+    films = models.Film.objects.filter(filmalbum__id_album=albums[0].id)
     # name = request.session['username']
-    return render(request, 'Main/Album.html', locals())
+    return render(request, 'Main/AlbumInfo.html', locals())
