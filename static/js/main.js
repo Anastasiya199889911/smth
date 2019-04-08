@@ -742,6 +742,15 @@ $('#sendAlbumAndAddFilm').click(function () {
                             var list=document.getElementById('listAlbum');
 
                             list.style.color='green';
+
+                            var albumlist=document.getElementById('albumList');
+
+                            let elementa = document.createElement('a');
+                            elementa.setAttribute('class', 'dropdown-item addFilmInAlbum');
+                            elementa.style.textAlignLast='left';
+                            elementa.textContent=albumName;
+                            albumlist.insertAdjacentHTML('afterbegin',elementa.outerHTML);
+
                             // window.location.href = '/Profile/Album';
                         },
                         error: function (data) {

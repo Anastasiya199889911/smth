@@ -53,10 +53,10 @@
                                 <label id="filmDuration" class="film-time">{{ f.duration }}</label>
                             </div>
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                <label id="filmYear" class="film-year">Год: 2018</label>
+                                <label id="filmYear" class="film-year">Год:  {{ f.year }}</label>
                             </div>
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                <label id="filmProducer" class="film-producer">Режиссер:{{ f.producer }}</label>
+                                <label id="filmProducer" class="film-producer">Режиссер: {{ f.producer }}</label>
                             </div>
                             <div id="filmGenres" class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="display: inline-block;">
                                 {% for g in genre %}

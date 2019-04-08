@@ -41,9 +41,9 @@
                                 <button id="listAlbum" style="display: inline-block; color: #000" class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fas fa-list"></i>
                                   </button>
-                                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                  <div class="dropdown-menu" id="albumList" aria-labelledby="dropdownMenuButton">
                                       {% for a in album %}
-                                        <a class="dropdown-item addFilmInAlbum">{{ a.name }}</a>
+                                        <a class="dropdown-item addFilmInAlbum" style="text-align-last: left">{{ a.name }}</a>
                                       {% endfor %}
                                     <a class="dropdown-item" data-toggle="modal" data-target="#albumModal" >Добавить альбом и сохранить</a>
                                   </div>

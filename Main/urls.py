@@ -11,6 +11,7 @@ urlpatterns = [
     url(r'/Category_SearchFilm', views.Category_SearchFilm, name="Category_SearchFilm"),
     url(r'^Detail/', views.Detail, name="Main_Detail"),
     url(r'^AlbumInfo/', views.AlbumInfo, name="Main_AlbumInfo"),
+    url(r'^Page/', views.Main_Page, name="Main_Page"),
 
 
     url(r'^/Parse/', views.Parse, name="Parse"),

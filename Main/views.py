@@ -7,6 +7,7 @@ import requests
 import bs4
 import random
 from django.contrib.auth.models import User
+from datetime import datetime, timedelta
 from django.contrib.auth import authenticate, login, logout
 
 # Create your views here.
@@ -20,11 +21,79 @@ def Main(request):
         id = request.session['userid']
         name = request.session['username']
         # email = request.session['useremail']
-        return render(request, 'Profile/Profile.html', locals())
+        # return render(request, 'Profile/Profile.html', locals())
+        return HttpResponseRedirect("/Profile")
     else:
+        now = datetime.now().year
+        film = models.Film.objects.order_by('-year').filter(year=now)
+
+        filmsKount = models.Film.objects.order_by('-year').filter(year=now).count()
+
+        films = models.Film.objects.order_by('-year').filter(year=now)[0:16]
+        k = 0
+        while (filmsKount > 0):
+            k = k + 1
+            filmsKount = filmsKount - 16
+        ListPage = []
+        page = 1
+        if (k > 6):
+            for i in range(1, 4):
+                ListPage.append(i)
+            ListPage.append('...')
+            for i in range(k - 2, k + 1):
+                ListPage.append(i)
+        else:
+            for i in range(1, k + 1):
+                ListPage.append(i)
+        pre = 1
+        next = page + 1
+
         return render(request, 'Main/Main.html', locals())
     # logout(request)
     # return render(request, 'Main/Main.html', locals())
+
+
+def Main_Page(request):
+    page = int(request.GET.get("page"))
+    start=page*16-16
+    end=page*16
+    now = datetime.now().year
+    film = models.Film.objects.all().order_by('-year').filter(year=now)
+    filmsKount = models.Film.objects.order_by('-year').filter(year=now).count()
+
+    films = models.Film.objects.order_by('-year').filter(year=now)[start:end]
+
+    k =0
+    while (filmsKount > 0):
+        k = k + 1
+        filmsKount = filmsKount - 16
+    Page = []
+    if k>6:
+        # записать первые 3
+        for i in range(1,4):
+            Page.append(i)
+        # записать середину
+        if page >= 3 and page <= (k - 2):
+            for i in range(page - 1, page + 2):
+                Page.append(i)
+        # записать последние 3
+        for i in range(k - 2, k+1):
+            Page.append(i)
+    else:
+        for i in range(1,k+1):
+            Page.append(i)
+    # убрать повторения
+    Page = list(set(Page))
+    ListPage = []
+    # добавить '...'
+    for i in range(len(Page) - 1):
+        ListPage.append(Page[i])
+        if Page[i + 1] - Page[i] > 1:
+            ListPage.append('...')
+    ListPage.append(Page[len(Page) - 1])
+    pre = page-1
+    next = page+1
+    return render(request, 'Main/Main.html', locals())
 
 
 def Parse(request):
@@ -127,17 +196,13 @@ def RandomSearch(request):
         name = request.session['username']
         # email = request.session['useremail']
         # return render(request, 'Profile/Ra.html', locals())
-        print('profile')
         return HttpResponseRedirect("/Profile/SearchByRandom")
     else:
-        print('main')
         return render(request, 'Main/RandomSearch.html', locals())
 
 
 def Random_SearchFilm(request):
-    print(1111111111)
     film=[]
-    print(film)
     films=models.Film.objects.all()
     number=random.randint(1,films.count()+1)
     genres=models.FilmByGenre.objects.filter(id_film=films[number].id)
@@ -194,7 +259,6 @@ def Category_SearchFilm(request):
         films=films.filter(year__lte=endYear)
     if(country!='-Не выбрано-'):
         films = films.filter(filmbycountry__id_country=idCountry)
-    print('count ', films.count())
     if(rating!='0'):
         films=films.filter(rating=rating)
 
@@ -232,7 +296,6 @@ def Registrate(request):
     # user=models.User(name=name,login=email,password=password)
     user.save()
     auth_user=models.AuthUser.objects.filter(id=user.id)
-    print(auth_user[0])
     # album=models.Album(id_user=auth_user[0], name="Избранное")
     # album.save()
     return HttpResponse(json.dumps({'data': ''}))
@@ -247,7 +310,6 @@ def Authorize(request):
     user = authenticate(username=email, password=passw)
 
     if user is None:
-        print('не найден')
         return HttpResponse(json.dumps({'data': 'false'}))
     else:
         login(request,user)
@@ -284,7 +346,6 @@ def Detail(request):
 def AlbumInfo(request):
     albumName=request.GET.get('albumName')
     params = albumName.split('|')
-    print(params)
     album_name=params[0]
     id=params[1]
     albums = models.Album.objects.filter(id_user=id, name=album_name)

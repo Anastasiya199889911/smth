@@ -18,9 +18,9 @@
                                 <button id="listAlbum" style="display: inline-block; color: #000" class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fas fa-list"></i>
                                   </button>
-                                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                  <div class="dropdown-menu" id="albumList" aria-labelledby="dropdownMenuButton">
                                       {% for a in album %}
-                                        <a class="dropdown-item addFilmInAlbum">{{ a.name }}</a>
+                                        <a class="dropdown-item addFilmInAlbum" style="text-align-last: left">{{ a.name }}</a>
                                       {% endfor %}
                                     <a class="dropdown-item" data-toggle="modal" data-target="#albumModal" >Добавить альбом и сохранить</a>
                                   </div>
@@ -86,10 +86,10 @@
                                 <label id="filmDuration" class="film-time">{{ f.duration }}</label>
                             </div>
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                <label id="filmYear" class="film-year">Год: 2018</label>
+                                <label id="filmYear" class="film-year">Год: {{ f.year }}</label>
                             </div>
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                <label id="filmProducer" class="film-producer">Режиссер:{{ f.producer }}</label>
+                                <label id="filmProducer" class="film-producer">Режиссер: {{ f.producer }}</label>
                             </div>
                             <div id="filmGenres" class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="display: inline-block;">
                                 {% for g in genre %}
@@ -106,11 +106,11 @@
                         </div>
 </div>
     {% endfor %}
-                        <div class="search-div col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0 pb-3" style="display: inline-block; text-align: center;">
+                        <div class="search-div col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0 pb-3" style="display: inline-block; text-align: left;">
                             <button id="send" type="button" data-toggle="modal" data-target="#commentModal" style="border:1px solid rgb(0,87,115)" class="btn send">Оставить комментарий</button>
                         </div>
                     {% for c in comments %}
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 comment-card" style="display: inline-block;">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 comment-card" style="display: inline-block; text-align: left;text-align-last: left">
                             <h4 style="display: inline-block;margin-right: 2rem">{{ c.id_user.first_name }}</h4>
                             <label class="small">{{ c.date_time|date:"m-d-Y H:i" }}</label>
                             <label class="film-coment" id="commentText" style="width: 100%">{{ c.text }}</label>

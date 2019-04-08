@@ -12,68 +12,109 @@
 
                     <div class="col-11 col-sm-11 col-md-11 col-lg-11 col-xl-11 p-0" style="display: inline-block; margin-top: 2rem; text-align: justify; text-align-last: justify;">
                         <div class="row justify-content-center">
+                            {% for f in films %}
                             <div class="col-11 col-sm-11 col-md-3 col-lg-3 col-xl-3 mb-3" style="display: inline-block;">
-                                <img class="img-fluid" src="{% static 'image/m1.jpg' %}"  alt="фото мероприятия" style="width: 100%">
+                                <form action="/Profile/Detail/" method="get" style="width: 100%; height: 100%;">
+                                <input type="hidden" name="filmName" value="{{f.name}}">
+                                    <button type="submit" class="p-0 m-0" style="background-color: #fff; border: none; width: 100%; height: 100%">
+                                        <img  class="img-fluid" src="{{ f.image }}" alt="фото мероприятия" style="width: 100%; height: 100%">
+                                    </button>
+                                </form>
                             </div>
-                            <div class="col-11 col-sm-11 col-md-3 col-lg-3 col-xl-3 mb-3" style="display: inline-block;">
-                                <img class="img-fluid" src="{% static 'image/m2.jpg' %}" alt="фото мероприятия" style="width: 100%">
-                            </div>
-                            <div class="col-11 col-sm-11 col-md-3 col-lg-3 col-xl-3 mb-3" style="display: inline-block;">
-                                <img class="img-fluid" src="{% static 'image/m3.jpg' %}" alt="фото мероприятия" style="width: 100%">
-                            </div>
-                            <div class="col-11 col-sm-11 col-md-3 col-lg-3 col-xl-3 mb-3" style="display: inline-block;">
-                                <img class="img-fluid" src="{% static 'image/m4.jpg' %}" alt="фото мероприятия" style="width: 100%">
-                            </div>
-                            <div class="col-11 col-sm-11 col-md-3 col-lg-3 col-xl-3 mb-3" style="display: inline-block;">
-                                <img class="img-fluid" src="{% static 'image/m1.jpg' %}" alt="фото мероприятия" style="width: 100%">
-                            </div>
-                            <div class="col-11 col-sm-11 col-md-3 col-lg-3 col-xl-3 mb-3" style="display: inline-block;">
-                                <img class="img-fluid" src="{% static 'image/m2.jpg' %}" alt="фото мероприятия" style="width: 100%">
-                            </div>
-                            <div class="col-11 col-sm-11 col-md-3 col-lg-3 col-xl-3 mb-3" style="display: inline-block;">
-                                <img class="img-fluid" src="{% static 'image/m3.jpg' %}" alt="фото мероприятия" style="width: 100%">
-                            </div>
-                            <div class="col-11 col-sm-11 col-md-3 col-lg-3 col-xl-3 mb-3" style="display: inline-block;">
-                                <img class="img-fluid" src="{% static 'image/m4.jpg' %}" alt="фото мероприятия" style="width: 100%">
-                            </div>
-                            <div class="col-11 col-sm-11 col-md-3 col-lg-3 col-xl-3 mb-3" style="display: inline-block;">
-                                <img class="img-fluid" src="{% static 'image/m1.jpg' %}" alt="фото мероприятия" style="width: 100%">
-                            </div>
-                            <div class="col-11 col-sm-11 col-md-3 col-lg-3 col-xl-3 mb-3" style="display: inline-block;">
-                                <img class="img-fluid" src="{% static 'image/m2.jpg' %}" alt="фото мероприятия" style="width: 100%">
-                            </div>
-                            <div class="col-11 col-sm-11 col-md-3 col-lg-3 col-xl-3 mb-3" style="display: inline-block;">
-                                <img class="img-fluid" src="{% static 'image/m3.jpg' %}" alt="фото мероприятия" style="width: 100%">
-                            </div>
-                            <div class="col-11 col-sm-11 col-md-3 col-lg-3 col-xl-3 mb-3" style="display: inline-block;">
-                                <img class="img-fluid" src="{% static 'image/m4.jpg' %}" alt="фото мероприятия" style="width: 100%">
-                            </div>
+                            {% endfor %}
                         </div>
                     </div>
 
-                    <div class="col-11 col-sm-11 col-md-11 col-lg-11 col-xl-11 p-0" style="display: inline-block; background-color: #333; margin-top: 2rem; text-align: justify; text-align-last: justify;">
-                            <label class="label-body m-0">
-                            ПОПУЛЯРНОЕ
-                            </label>
-                            <span style="font-size: 1rem; color:#fff; padding-right: 0.75rem">
-                            <i class="fas fa-angle-right"></i>
-                        </span>
-                    </div>
+    {% if k > 1 %}
+                    <div class="row">
+                    <div class="col-md-12">
+                    <nav aria-label="...">
+                    <ul class="pagination justify-content-center">
+                        {% if page == 1 %}
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">Previous</span>
+                                </a>
+                        </li>
+                        {% else %}
+                        <li class="page-item">
+                            <form action="/Page/" method="get">
+                                <input type="hidden" name="page" value="{{pre}}">
+                                <button type="submit" class = "page-link"><span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">Previous</span></button>
+                            </form>
+                        </li>
+                        {% endif %}
+                        {% for i in ListPage %}
+                            {% if i != '...' %}
+                                {% if page == i %}
+                                <li class="page-item active">
+                                    <span class="page-link">
+                                        {{i}}
+                                        <span class="sr-only">(current)</span>
+                                    </span>
+                                </li>
+                                {% else %}
+                                    <li class="page-item">
+                                        <form action="/Page/" method="get">
+                                            <input type="hidden" name="page" value="{{i}}">
+                                            <button type="submit" class = "page-link">{{i}}</button>
+                                        </form>
+                                    </li>
+                                {% endif %}
+                            {% else %}
+                            <li class="page-item disabled">
+                                <span class="page-link">{{i}}</span>
+                            </li>
+                            {% endif %}
+                        {% endfor %}
+                        {% if page == k %}
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">Next</span>
+                                </a>
+                        </li>
+                        {% else %}
+                        <li class="page-item">
+                            <form action="/Page/" method="get">
+                                <input type="hidden" name="page" value="{{next}}">
+                                <button type="submit" class = "page-link"><span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">Newxt</span></button>
+                            </form>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                 </div>
+                     </div>
+                {% endif %}
 
-                    <div class="col-11 col-sm-11 col-md-11 col-lg-11 col-xl-11 p-0" style="display: inline-block; margin-top: 2rem; text-align: justify; text-align-last: justify;">
-                        <div class="row justify-content-center">
-                            <div class="col-11 col-sm-11 col-md-3 col-lg-3 col-xl-3 mb-3" style="display: inline-block;">
-                                <img class="img-fluid" src="{% static 'image/m1.jpg' %}" alt="фото мероприятия" style="width: 100%">
-                            </div>
-                            <div class="col-11 col-sm-11 col-md-3 col-lg-3 col-xl-3 mb-3" style="display: inline-block;">
-                                <img class="img-fluid" src="{% static 'image/m2.jpg' %}" alt="фото мероприятия" style="width: 100%">
-                            </div>
-                            <div class="col-11 col-sm-11 col-md-3 col-lg-3 col-xl-3 mb-3" style="display: inline-block;">
-                                <img class="img-fluid" src="{% static 'image/m3.jpg' %}" alt="фото мероприятия" style="width: 100%">
-                            </div>
-                            <div class="col-11 col-sm-11 col-md-3 col-lg-3 col-xl-3 mb-3" style="display: inline-block;">
-                                <img class="img-fluid" src="{% static 'image/m4.jpg' %}" alt="фото мероприятия" style="width: 100%">
-                            </div>
-                        </div>
-                    </div>
+
+{#                    <div class="col-11 col-sm-11 col-md-11 col-lg-11 col-xl-11 p-0" style="display: inline-block; background-color: #333; margin-top: 2rem; text-align: justify; text-align-last: justify;">#}
+{#                            <label class="label-body m-0">#}
+{#                            ПОПУЛЯРНОЕ#}
+{#                            </label>#}
+{#                            <span style="font-size: 1rem; color:#fff; padding-right: 0.75rem">#}
+{#                            <i class="fas fa-angle-right"></i>#}
+{#                        </span>#}
+{#                    </div>#}
+{##}
+{#                    <div class="col-11 col-sm-11 col-md-11 col-lg-11 col-xl-11 p-0" style="display: inline-block; margin-top: 2rem; text-align: justify; text-align-last: justify;">#}
+{#                        <div class="row justify-content-center">#}
+{#                            <div class="col-11 col-sm-11 col-md-3 col-lg-3 col-xl-3 mb-3" style="display: inline-block;">#}
+{#                                <img class="img-fluid" src="{% static 'image/m1.jpg' %}" alt="фото мероприятия" style="width: 100%">#}
+{#                            </div>#}
+{#                            <div class="col-11 col-sm-11 col-md-3 col-lg-3 col-xl-3 mb-3" style="display: inline-block;">#}
+{#                                <img class="img-fluid" src="{% static 'image/m2.jpg' %}" alt="фото мероприятия" style="width: 100%">#}
+{#                            </div>#}
+{#                            <div class="col-11 col-sm-11 col-md-3 col-lg-3 col-xl-3 mb-3" style="display: inline-block;">#}
+{#                                <img class="img-fluid" src="{% static 'image/m3.jpg' %}" alt="фото мероприятия" style="width: 100%">#}
+{#                            </div>#}
+{#                            <div class="col-11 col-sm-11 col-md-3 col-lg-3 col-xl-3 mb-3" style="display: inline-block;">#}
+{#                                <img class="img-fluid" src="{% static 'image/m4.jpg' %}" alt="фото мероприятия" style="width: 100%">#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
 {% endblock %}

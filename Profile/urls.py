@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^AlbumInfo/', views.AlbumInfo, name="AlbumInfo"),
     url(r'DeleteAlbum', views.DeleteAlbum, name="DeleteAlbum"),
     url(r'DeleteFilmAlbum', views.DeleteFilmAlbum, name="DeleteFilmAlbum"),
+    url(r'^Page/', views.Profile_Page, name="Profile_Page"),
 
     # url(r'Random_SearchFilm', views.Random_SearchFilm, name="Profile_Random_SearchFilm"),
 
@@ -34,5 +35,5 @@ urlpatterns = [
 
     # url(r'^/Detail/', views.News_Story_Detail, name="News_Story_Detail"),
     url(r'^/Exit/', views.Exit, name="Exit"),
-    url(r'^/Dev/', views.Dev, name="Dev"),
+    url(r'^Dev/', views.Dev, name="Dev"),
 ]

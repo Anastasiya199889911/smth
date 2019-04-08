@@ -11,7 +11,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 
 # Create your views here.
-
+# now_new=datetime.now().year
+# film_new=models.Film.objects.order_by('-year').filter(year__gte=(now_new-1))
 
 def Profile(request):
     id=request.session.get('userid','no')
@@ -19,9 +20,77 @@ def Profile(request):
         id = request.session['userid']
         name = request.session['username']
         # email = request.session['useremail']
+        now=int(datetime.now().year)
+        film=models.Film.objects.order_by('-year').filter(year=now)
+
+        filmsKount = models.Film.objects.order_by('-year').filter(year=now).count()
+
+        films = models.Film.objects.order_by('-year').filter(year=now)[0:16]
+        k = 0
+        while (filmsKount > 0):
+            k = k + 1
+            filmsKount = filmsKount - 16
+        ListPage = []
+        page = 1
+        if (k > 6):
+            for i in range(1, 4):
+                ListPage.append(i)
+            ListPage.append('...')
+            for i in range(k - 2, k + 1):
+                ListPage.append(i)
+        else:
+            for i in range(1, k + 1):
+                ListPage.append(i)
+        pre = 1
+        next = page + 1
         return render(request, 'Profile/Profile.html', locals())
     else:
         return render(request, 'Main/Authorization.html', locals())
+
+
+def Profile_Page(request):
+    id = request.session['userid']
+    name = request.session['username']
+    page = int(request.GET.get("page"))
+    start=page*16-16
+    end=page*16
+    now = int(datetime.now().year)
+    film = models.Film.objects.all().order_by('-year').filter(year=now)
+    filmsKount = models.Film.objects.order_by('-year').filter(year=now).count()
+
+    films = models.Film.objects.order_by('-year').filter(year=now)[start:end]
+
+    k =0
+    while (filmsKount > 0):
+        k = k + 1
+        filmsKount = filmsKount - 16
+    Page = []
+    if k>6:
+        # записать первые 3
+        for i in range(1,4):
+            Page.append(i)
+        # записать середину
+        if page >= 3 and page <= (k - 2):
+            for i in range(page - 1, page + 2):
+                Page.append(i)
+        # записать последние 3
+        for i in range(k - 2, k+1):
+            Page.append(i)
+    else:
+        for i in range(1,k+1):
+            Page.append(i)
+    # убрать повторения
+    Page = list(set(Page))
+    ListPage = []
+    # добавить '...'
+    for i in range(len(Page) - 1):
+        ListPage.append(Page[i])
+        if Page[i + 1] - Page[i] > 1:
+            ListPage.append('...')
+    ListPage.append(Page[len(Page) - 1])
+    pre = page-1
+    next = page+1
+    return render(request, 'Profile/Profile.html', locals())
 
 
 def RandomSearch(request):
@@ -119,7 +188,6 @@ def Profile_Category_SearchFilm(request):
         films=films.filter(year__lte=endYear)
     if(country!='-Не выбрано-'):
         films = films.filter(filmbycountry__id_country=idCountry)
-    print('count ', films.count())
     if(rating!='0'):
         films=films.filter(rating=rating)
 
@@ -169,7 +237,6 @@ def Profile_Category_SearchFilm(request):
     film.append(comment)
     film.append(clockFlag)
     film.append(starFlag)
-    print(comment)
     last = models.FilmLast.objects.order_by('date').filter(id_user=id)
     if (len(last) >= 12):
         last[0].id_film = films[number]
@@ -184,17 +251,14 @@ def AddLike(request):
     filmName = request.GET.get("filmName")
     filmName=filmName.strip()
     filmId=models.Film.objects.filter(name=filmName)
-    print(filmId[0])
     id = request.session['userid']
     user=models.AuthUser.objects.filter(id=id)
     likeFlag = False
     if(len(models.FilmLike.objects.filter(id_film_id=filmId[0].id, id_user_id=id))==0):
-        print(0000000)
         filmLike=models.FilmLike(id_user=user[0], id_film=filmId[0])
         filmLike.save()
         likeFlag = True
     else:
-        print(1111111)
         filmLike=models.FilmLike.objects.get(id_user=user[0], id_film=filmId[0])
         filmLike.delete()
         likeFlag=False
@@ -222,13 +286,10 @@ def AddComment(request):
     filmName = request.GET.get("filmName")
     commentText = request.GET.get("commentText")
     filmName=filmName.strip()
-    print(filmName)
     filmId=models.Film.objects.filter(name=filmName)
-    print(filmId[0])
 
     id = request.session['userid']
     user=models.AuthUser.objects.filter(id=id)
-    print(user[0])
     now = datetime.now()+timedelta(hours=3)
     filmComment=models.FilmComment(id_user=user[0], id_film=filmId[0],date_time=now, text=commentText)
     filmComment.save()
@@ -243,24 +304,20 @@ def AddComment(request):
         com.append(c.date_time.strftime("%d-%m-%Y %H:%M"))
         com.append(c.text)
         comment.append(com)
-    print(comment)
     return HttpResponse(json.dumps({'data': comment}))
 
 def AddWantSee(request):
     filmName = request.GET.get("filmName")
     filmName = filmName.strip()
     filmId=models.Film.objects.filter(name=filmName)
-    print(filmId[0])
     id = request.session['userid']
     user=models.AuthUser.objects.filter(id=id)
     clockFlag = False
     if(len(models.FilmWantSee.objects.filter(id_film_id=filmId[0].id, id_user_id=id))==0):
-        print(0000000)
         filmWantSee=models.FilmWantSee(id_user=user[0], id_film=filmId[0])
         filmWantSee.save()
         clockFlag = True
     else:
-        print(1111111)
         filmWantSee=models.FilmWantSee.objects.get(id_user=user[0], id_film=filmId[0])
         filmWantSee.delete()
         clockFlag=False
@@ -286,12 +343,10 @@ def AddFavorite(request):
     filmName = request.GET.get("filmName")
     filmName = filmName.strip()
     filmId=models.Film.objects.filter(name=filmName)
-    print(filmId[0])
     id = request.session['userid']
     user=models.AuthUser.objects.filter(id=id)
     starFlag = False
     if(len(models.FilmFavorite.objects.filter(id_film_id=filmId[0].id, id_user_id=id))==0):
-        print(0000000)
         filmFavorite=models.FilmFavorite(id_user=user[0], id_film=filmId[0])
         filmFavorite.save()
         starFlag = True
@@ -299,7 +354,6 @@ def AddFavorite(request):
         # filmAlbum=models.FilmAlbum(id_film=filmFavorite,id_album=album[0])
         # filmAlbum.save()
     else:
-        print(1111111)
         filmFavorite=models.FilmFavorite.objects.get(id_user=user[0], id_film=filmId[0])
         # album = models.Album.objects.filter(name="Избранное", id_user=id)
         # filmAlbum = models.FilmAlbum(id_film=filmFavorite, id_album=album[0])
@@ -392,7 +446,6 @@ def Album(request):
     for a in album_name:
         # film=[]
         # film.append(a.name)
-        print(type(a.name))
         films=models.Film.objects.filter(filmalbum__id_album=a.id)
         if(len(films)>4):
             films=films[:4]
@@ -406,7 +459,6 @@ def CheckAlbumName(request):
     id = request.session['userid']
     albums=models.Album.objects.filter(name=albumName,id_user=id)
     flag=False
-    print(len(albums))
     if(len(albums)==0):
         flag=True
     else:
@@ -417,15 +469,13 @@ def CheckAlbumName(request):
 def AddAlbumAndFilm(request):
     albumName = request.GET.get("albumName")
     filmName = request.GET.get("filmName")
-    print(filmName)
+    filmName = filmName.strip()
     id = request.session['userid']
     user=models.AuthUser.objects.filter(id=id)
     albums=models.Album(id_user=user[0], name=albumName)
     albums.save()
-    print(albums)
 
     film = models.Film.objects.filter(name=filmName)
-    print(film[0])
     filmAdd = models.FilmAlbum(id_album=albums, id_film=film[0])
     filmAdd.save()
 
@@ -435,15 +485,13 @@ def AddAlbumAndFilm(request):
 def AddFilmInAlbum(request):
     albumName = request.GET.get("albumName")
     filmName = request.GET.get("filmName")
-    print('element')
+    filmName = filmName.strip()
     id = request.session['userid']
     user=models.AuthUser.objects.filter(id=id)
     album=models.Album.objects.filter(id_user=id, name=albumName)
-    print(filmName)
     film=models.Film.objects.filter(name=filmName)
     filmAdd=models.FilmAlbum(id_album=album[0],id_film=film[0])
     filmAdd.save()
-    print(filmAdd)
     return HttpResponse(json.dumps({'data': 'ок'}))
 
 
@@ -463,13 +511,10 @@ def AlbumInfo(request):
 
 def DeleteAlbum(request):
     albumName = request.GET.get("albumName")
-    print(albumName)
     id = request.session['userid']
     user=models.AuthUser.objects.filter(id=id)
     album=models.Album.objects.filter(id_user=id, name=albumName)
-    print(album)
     films=models.FilmAlbum.objects.filter(id_album=album[0].id)
-    print(films)
     for f in films:
         f.delete()
 
@@ -482,14 +527,12 @@ def DeleteAlbum(request):
 def DeleteFilmAlbum(request):
     filmName = request.GET.get("filmName")
     albumName = request.GET.get("albumName")
-    print(filmName)
+    filmName = filmName.strip()
     id = request.session['userid']
     user=models.AuthUser.objects.filter(id=id)
     album=models.Album.objects.filter(id_user=id, name=albumName)
 
-    print(album)
     films=models.FilmAlbum.objects.filter(id_album=album[0].id, id_film__name=filmName)
-    print(films)
     # print(films)
     for f in films:
         f.delete()
