@@ -20,6 +20,7 @@ urlpatterns = [
     url(r'^Album/', views.Album, name="Album"),
     url(r'CheckAlbumName', views.CheckAlbumName, name="CheckAlbumName"),
     url(r'AddAlbumAndFilm', views.AddAlbumAndFilm, name="AddAlbumAndFilm"),
+    url(r'Add_Album', views.Add_Album, name="Add_Album"),
     url(r'AddFilmInAlbum', views.AddFilmInAlbum, name="AddFilmInAlbum"),
     url(r'^AlbumInfo/', views.AlbumInfo, name="AlbumInfo"),
     url(r'DeleteAlbum', views.DeleteAlbum, name="DeleteAlbum"),

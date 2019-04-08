@@ -459,8 +459,8 @@ $('#sendComment').click(function () {
 })
 $('#sendAlbum').click(function () {
     // var filmName=document.getElementById('filmName').textContent
-    var albumName=document.getElementById('albumName').value
-    if ( /^[a-z\d]+$/i.test(albumName) ) {
+    var albumName=document.getElementById('albumNameAdd').value
+    if ( !/^[а-яa-z ,.#№\d]*$/i.test(albumName) ) {
         $('#alert').css('display', 'block');
         $('#alert').text('Название содержит запрещенные символы!');
     }
@@ -473,14 +473,14 @@ $('#sendAlbum').click(function () {
                 albumName: albumName
             },
             success: function (data) {
-                alert('ok');
+                // alert('ok');
                 if (data.data == true) {
                      // alert('ok if');
                     $('#closeAlbum').click();
                     $.ajax({
                         type: "GET",
                         dataType: "json",
-                        url: '/Profile/AddAlbum/',
+                        url: '/Profile/Add_Album/',
                         data: {
                             albumName: albumName
                         },

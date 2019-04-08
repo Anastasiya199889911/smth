@@ -482,6 +482,16 @@ def AddAlbumAndFilm(request):
     return HttpResponse(json.dumps({'data': 'ok'}))
 
 
+def Add_Album(request):
+    albumName = request.GET.get("albumName")
+    id = request.session['userid']
+    user=models.AuthUser.objects.filter(id=id)
+    print(user)
+    albums=models.Album(id_user=user[0], name=albumName)
+    albums.save()
+
+    return HttpResponse(json.dumps({'data': 'ok'}))
+
 def AddFilmInAlbum(request):
     albumName = request.GET.get("albumName")
     filmName = request.GET.get("filmName")
