@@ -19,4 +19,7 @@ urlpatterns = [
     url(r'/Registrate', views.Registrate, name="Registrate"),
     url(r'^Authorization/', views.Authorization, name="Authorization"),
     url(r'/Authorize', views.Authorize, name="Authorize"),
+
+    url(r'^sitemap.xml', views.sitemap, name="sitemap"),
+    url(r'^robots.txt', views.robots, name="robots"),
 ]

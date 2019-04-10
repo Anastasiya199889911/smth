@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, render_to_response
 # rom smth import models
 from . import models
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
@@ -352,3 +352,11 @@ def AlbumInfo(request):
     films = models.Film.objects.filter(filmalbum__id_album=albums[0].id)
     # name = request.session['username']
     return render(request, 'Main/AlbumInfo.html', locals())
+
+
+def sitemap(request):
+    return render_to_response('Main/sitemap.xml')
+
+
+def robots(request):
+    return render_to_response('Main/robots.txt')
