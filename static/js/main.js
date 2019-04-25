@@ -655,7 +655,7 @@ $('#sendAuth').click(function () {
         }
         else
         {
-                $.ajax({
+            $.ajax({
                 type:"GET",
                 dataType:"json",
                 url:'/Main/Authorize/',
@@ -681,7 +681,7 @@ $('#sendAuth').click(function () {
                     $('#alert').css('display','block');
                     $('#alert').text(error);
                     }
-                })
+            })
         }
     }
 

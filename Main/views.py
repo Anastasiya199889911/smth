@@ -100,7 +100,7 @@ def Parse(request):
     # selectElementsAboutFilm=["Оригинальное название", "Жанр", "Год", "Страна", "Продолжительность", "Режиссер"]
     # 12 мюзикл
     genres = models.Genre.objects.all()
-    g0=[1]
+    g0=[1,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17,18]
     # print(g0)
     for g_0 in g0:
         print(g_0)
@@ -109,7 +109,7 @@ def Parse(request):
         # for g in genres:
         pageCount=g.pages
         way=g.way
-        for i in range(736,pageCount+1):
+        for i in range(1,10):
             print(i)
             url = requests.get(way + str(i) + '/')
             print(way + str(i) + '/')
@@ -118,45 +118,48 @@ def Parse(request):
             name = b.select('.shorbox .shorposterbox .postertitle h2 a')
             for n in name:
                 print(n.getText())
-                fi=models.Film.objects.filter(name=n.getText())
+                # fi=models.Film.objects.filter(name=n.getText())
                 # print(fi.name)
-                if(len(fi)==0):
-                    # print(fi.name)
-                    list_genre=[]
-                    list_country=[]
-                    film=models.Film()
-                    film.url=n.get('href')
-                    film.name=n.getText()
-                    print(n.getText())
-                    url2=requests.get(n.get('href'))
-                    url2.encoding = 'utf8'
-                    b2 = bs4.BeautifulSoup(url2.text, "html.parser")
-                    image = b2.select('.fullbox .leftfull .bigposter img')
-                    for i in image:
-                        film.image=i.get('src')
-                    information = b2.select('.fullbox .fullright .janrfall li')
-                    for i in information:
-                        if(i.getText().find("Оригинальное название")!=-1):
-                            film.original_name=(i.getText()).split(": ")[1]
-                        if (i.getText().find("Год:") != -1):
-                            print(i.getText().split(": "))
-                            film.year=int((i.getText()).split(": ")[1])
-                        if (i.getText().find("Продолжительность") != -1):
-                            film.duration=(i.getText()).split(": ")[1]
-                        if (i.getText().find("Режиссёр") != -1):
-                            film.producer=(i.getText()).split(": ")[1]
-                        if (i.getText().find("Жанр") != -1):
-                            g=(i.getText()).split(": ")[1]
-                            list_genre=g.split(", ")
-                        if (i.getText().find("Страна") != -1):
-                            c=(i.getText()).split(":")[1]
-                            list_country=c.split(", ")
-                    rating = b2.select('.fullbox .fullright .rating-more b')
-                    for r in rating:
-                        film.rating=int(round(int(round(float((r.getText()).split(": ")[1])))/2))
-                    text = b2.select('.fulltext')
-                    for t in text:
-                        film.text=t.getText()
+                # if(len(fi)==0):
+                #     print(fi.name)
+                list_genre=[]
+                list_country=[]
+                film=models.Film()
+                film.url=n.get('href')
+                film.name=n.getText()
+                print(n.getText())
+                url2=requests.get(n.get('href'))
+                url2.encoding = 'utf8'
+                b2 = bs4.BeautifulSoup(url2.text, "html.parser")
+                image = b2.select('.fullbox .leftfull .bigposter img')
+                for i in image:
+                    film.image=i.get('src')
+                information = b2.select('.fullbox .fullright .janrfall li')
+                for i in information:
+                    if(i.getText().find("Оригинальное название")!=-1):
+                        film.original_name=(i.getText()).split(": ")[1]
+                    if (i.getText().find("Год:") != -1):
+                        print(i.getText().split(": "))
+                        film.year=int((i.getText()).split(": ")[1])
+                    if (i.getText().find("Продолжительность") != -1):
+                        film.duration=(i.getText()).split(": ")[1]
+                    if (i.getText().find("Режиссёр") != -1):
+                        film.producer=(i.getText()).split(": ")[1]
+                    if (i.getText().find("Жанр") != -1):
+                        g=(i.getText()).split(": ")[1]
+                        list_genre=g.split(", ")
+                    if (i.getText().find("Страна") != -1):
+                        c=(i.getText()).split(":")[1]
+                        list_country=c.split(", ")
+                rating = b2.select('.fullbox .fullright .rating-more b')
+                for r in rating:
+                    film.rating=int(round(int(round(float((r.getText()).split(": ")[1])))/2))
+                text = b2.select('.fulltext')
+                for t in text:
+                    film.text=t.getText()
+                print(film)
+                fi = models.Film.objects.filter(name=n.getText(), year=film.year)
+                if (len(fi) == 0):
                     film.save()
 
                     for g in list_genre:
